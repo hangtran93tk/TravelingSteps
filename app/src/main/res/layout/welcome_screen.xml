@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+    <data>
+        <variable
+            name="main"
+            type="com.hangtran.map.view.WelcomeScreen"
+            />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/welcome_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#03B47F"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/goudy_bookletter_1911"
+            android:gravity="center"
+            android:text="Traveling"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tv_app_name_below"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/goudy_bookletter_1911"
+                android:gravity="center"
+                android:text="Steps"
+                android:textColor="@color/white"
+                android:textSize="35dp" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_app_name_below"
+                android:src="@drawable/footmark" />
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/ic_custom_button_white"
+            android:fontFamily="@font/goudy_bookletter_1911"
+            android:text="@string/save_my_steps"
+            android:onClick="newActivity"
+            android:textSize="@dimen/base_size"/>
+    </LinearLayout>
+</layout>

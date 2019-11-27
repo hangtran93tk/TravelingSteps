@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Traveling Steps</string>
+    <string name="list_of_my_steps">관광발자취리스트</string>
+    <string name="save_my_steps">발자취를 기록</string>
+    <string name="choose_a_language">언어선택</string>
+    <string name="my_steps">내 발자취</string>
+    <string name="steps_shared_from_a_friend">공유받은 발자취</string>
+    <string name="scan_steps_from_a_friend">발자취를 불러오기</string>
+    <string name="create_a_new_step">새로운 발자취를 만들기</string>
+    <string name="choose_a_color">색 선택</string>
+    <string name="name_your_step">여행의 이름</string>
+    <string name="your_name">작성자의 이름</string>
+    <string name="save_as_a_poscard">엽서로 저장하기</string>
+    <string name="merge_my_steps">발자취를 겹치기</string>
+    <string name="delete_my_steps">발자취를 삭제</string>
+    <string name="starting_time">시작시간</string>
+    <string name="hours_limited">시작시간으로부터 15시간 이내를 선택하여 주십시오</string>
+    <string name="choose">선택</string>
+    <string name="cancel">취소</string>
+    <string name="add">" 추가"</string>
+    <string name="add_step">발자취를 추가</string>
+    <string name="date">년월일</string>
+    <string name="time">시간</string>
+    <string name="make_a_souvenir">기념품 만들기</string>
+    <string name="map_registration_failed">지도 등록을실패했습니다</string>
+    <string name="map_registration_is_complete">발자취 등록이 완료되었습니다</string>
+    <string name="photos_saved">사진을 저장했습니다</string>
+    <string name="unable_to_display_your_map">지도를 표시 할 수 없습니다</string>
+    <string name="failed_to_save_postcard">저장에 실패하였습니다</string>
+    <string name="please_enter_start_date">시작일을 입력하십시오</string>
+    <string name="please_enter_start_time">시작시간을 입력하십시오</string>
+    <string name="please_enter_stop_date">종료일을 입력하십시오</string>
+    <string name="please_enter_your_name">작성자의 이름을 입력하십시오</string>
+    <string name="please_enter_your_step_name">발자취의 이름을 입력하십시오</string>
+    <string name="map_name">발자취 이름</string>
+    <string name="finishing_time">종료시간</string>
+    <string name="please_enter_stop_time">종료시간을 입력하십시오</string>
+</resources>

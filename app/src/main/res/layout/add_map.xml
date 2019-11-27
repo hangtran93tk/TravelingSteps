@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/add_step"
+        android:background="#03B47F"
+        app:titleTextColor="#fff"
+        android:id="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/tv_map_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_your_step"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textSize="@dimen/base_size"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textColor="#111"/>
+
+    <EditText
+        android:id="@+id/edit_map_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/grey"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/tv_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/starting_time"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textSize="@dimen/base_size"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#111"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/grey"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/start_date"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="@string/date"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/start_time"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="@string/time"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_stop_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/finishing_time"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textSize="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#111"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/grey"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/stop_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/date"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/stop_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/time"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_add_map"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/ic_custom_button_blue"
+        android:text="@string/add"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textColor="#ffff"
+        android:textSize="@dimen/base_size"
+        android:textStyle="bold"/>
+</LinearLayout>

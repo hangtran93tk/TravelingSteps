@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Traveling Steps</string>
+
+
+
+    <!--change language-->
+    <string name="change_language_title">言語</string>
+
+
+    <string name="list_of_my_steps">観光あしあとリスト</string>
+    <string name="save_my_steps">あしあとを記録する</string>
+    <string name="choose_a_language">言語を選択する</string>
+    <string name="my_steps">自分のあしあと</string>
+    <string name="steps_shared_from_a_friend">共有されたあしあと</string>
+    <string name="scan_steps_from_a_friend">あしあとを読み込む</string>
+    <string name="create_a_new_step">新しいあしあとを作る</string>
+    <string name="choose_a_color">色を選ぶ</string>
+    <string name="name_your_step">旅の名前</string>
+    <string name="your_name">記録者の名前</string>
+    <string name="save_as_a_poscard">ポストカードで保存</string>
+    <string name="merge_my_steps">あしあとを重ねる</string>
+    <string name="delete_my_steps">あしあとを消す</string>
+    <string name="choose">選択</string>
+    <string name="cancel">キャンセル</string>
+    <string name="starting_time">開始時間</string>
+    <string name="finishing_time">終了時間</string>
+    <string name="hours_limited">開始時間から15時間以内を選びください</string>
+    <string name="add">追加</string>
+    <string name="add_step">あしあと追加</string>
+    <string name="date">年月日</string>
+    <string name="time">時間</string>
+    <string name="make_a_souvenir">お土産を作る</string>
+    <string name="map_registration_failed">マップ登録が失敗しました</string>
+    <string name="map_registration_is_complete">あしあと登録が完成しました</string>
+    <string name="photos_saved">写真を保存しました</string>
+    <string name="unable_to_display_your_map">マップ表示できません</string>
+    <string name="failed_to_save_postcard">保存できませんでした</string>
+    <string name="please_enter_start_date">開始日を入力してください</string>
+    <string name="please_enter_start_time">開始時間を入力してください</string>
+    <string name="please_enter_stop_date">終了日を入力してください</string>
+    <string name="please_enter_stop_time">終了時間を入力してください</string>
+    <string name="please_enter_your_name">記録者の名前を入力してください</string>
+    <string name="please_enter_your_step_name">あしあと名を入力してください</string>
+    <string name="map_name">あしあとの名前</string>
+</resources>

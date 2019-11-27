@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <maps android:id="@+id/image"
+        android:title="@string/scan_steps_from_a_friend"
+        android:icon="@drawable/ic_image_64dp"/>
+    <maps android:id="@+id/camera"
+        android:title="@string/create_a_new_step"
+        android:icon="@drawable/ic_camera_64dp"/>
+</menu>

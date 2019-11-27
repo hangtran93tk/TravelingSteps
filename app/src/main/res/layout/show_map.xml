@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/show_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#03B47F">
+
+        <ImageView
+            android:onClick="cancelActivity"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_back_white_28dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:id="@+id/txtNameMaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/map_name"
+            android:fontFamily="@font/goudy_bookletter_1911"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:onClick="shareMaps"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/gift" />
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_show_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_maps_test"
+            android:layout_marginBottom="150dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="東京都  2019-10-01 09:05:00"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_custom_button_blue"
+            android:text="@string/merge_my_steps"
+            android:fontFamily="@font/goudy_bookletter_1911"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:onClick="creatOverlapMap"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="50dp"/>
+    </FrameLayout>
+</LinearLayout>

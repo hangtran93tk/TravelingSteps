@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_of_my_steps">观光足迹列表</string>
+    <string name="save_my_steps">记录足迹</string>
+    <string name="choose_a_language">选择语言</string>
+    <string name="my_steps">我的足迹</string>
+    <string name="steps_shared_from_a_friend">他人的足迹</string>
+    <string name="scan_steps_from_a_friend">读取地图</string>
+    <string name="create_a_new_step">制作新地图</string>
+    <string name="choose_a_color">选择颜色</string>
+    <string name="name_your_step">旅行名称</string>
+    <string name="your_name">记录者</string>
+    <string name="save_as_a_poscard">保存为明信片</string>
+    <string name="merge_my_steps">重叠足迹</string>
+    <string name="delete_my_steps">擦去足迹</string>
+    <string name="choose">选择</string>
+    <string name="cancel">取消</string>
+    <string name="starting_time">开始时间</string>
+    <string name="finishing_time">结束时间</string>
+    <string name="hours_limited">从开始时间起15小时内选择</string>
+    <string name="add">新增</string>
+    <string name="add_step">新增足迹</string>
+    <string name="date">日期</string>
+    <string name="time">" 时间"</string>
+    <string name="make_a_souvenir">" 做一个纪念品"</string>
+    <string name="app_name">Traveling Steps</string>
+    <string name="map_registration_is_complete">地图注册完成</string>
+    <string name="map_registration_failed">地图注册失败</string>
+    <string name="photos_saved">照片已保存</string>
+    <string name="unable_to_display_your_map">无法显示地图</string>
+    <string name="failed_to_save_postcard">保存失败</string>
+    <string name="please_enter_start_date">请输入开始日期</string>
+    <string name="please_enter_start_time">请输入开始时间</string>
+    <string name="please_enter_stop_date">请输入结束日期</string>
+    <string name="please_enter_stop_time">保存的明信片</string>
+    <string name="please_enter_your_name">请输入你的名字</string>
+    <string name="please_enter_your_step_name">请输入你的名字</string>
+    <string name="map_name">地图名称</string>
+</resources>

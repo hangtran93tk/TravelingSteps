@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/share_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/make_a_souvenir"
+        android:background="#03B47F"
+        app:titleTextColor="#fff"
+        android:id="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/tv_map_name_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_your_step"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textSize="@dimen/base_size"
+        android:textStyle="bold"
+        android:textColor="#111"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/editMapStep"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_cuved_edittext"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/tv_share_map_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_name"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textSize="@dimen/base_size"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="#111"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editMapName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_cuved_edittext"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/tv_foot_mark_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_a_color"
+        android:fontFamily="@font/goudy_bookletter_1911"
+        android:textSize="@dimen/base_size"
+        android:textStyle="bold"
+        android:textColor="#111"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/chooseColor"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/blue"
+            android:onClick="chooseColor"/>
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/ic_custom_button_blue"
+            android:onClick="shareMaps"
+            android:text="@string/save_as_a_poscard"
+            android:fontFamily="@font/goudy_bookletter_1911"
+            android:textColor="#FFFF"
+            android:textSize="@dimen/small_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_share_foot_mark"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/ic_maps_test"
+            android:layout_gravity="center_horizontal"/>
+    </FrameLayout>
+</LinearLayout>

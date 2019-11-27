@@ -1,0 +1,64 @@
+<resources>
+
+    <!--change language-->
+    <string name="change_language_title" translatable="false">Language</string>
+
+    <!--untranslatable-->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_japanese" translatable="false">日本の</string>
+
+    <string-array name="language_names">
+        <item>@string/language_english</item>
+        <item>@string/language_japanese</item>
+
+    </string-array>
+
+    <string name="language_english_code" translatable="false">en</string>
+    <string name="language_japanese_code" translatable="false">ja</string>
+    <string name="language_vietnamese_code" translatable="false">vi</string>
+
+    <string-array name="language_codes">
+        <item>@string/language_english_code</item>
+        <item>@string/language_japanese_code</item>
+        <item>@string/language_vietnamese_code</item>
+    </string-array>
+
+    <string name="list_of_my_steps">List of my steps</string>
+    <string name="save_my_steps">Save my steps</string>
+    <string name="choose_a_language">Choose a language</string>
+    <string name="my_steps">My steps</string>
+    <string name="steps_shared_from_a_friend">Steps shared from a friend</string>
+    <string name="scan_steps_from_a_friend">Scan steps from a friend</string>
+    <string name="create_a_new_step">Create a new step</string>
+    <string name="choose_a_color">Choose a color</string>
+    <string name="name_your_step">Name your step</string>
+    <string name="your_name">Your name</string>
+    <string name="save_as_a_poscard">Save as a postcard</string>
+    <string name="merge_my_steps">Merge my steps</string>
+    <string name="delete_my_steps">Delete my steps</string>
+    <string name="choose">Choose</string>
+    <string name="cancel">Cancel</string>
+    <string name="starting_time">Starting time</string>
+    <string name="finishing_time">Finishing time</string>
+    <string name="hours_limited">Please limit your trip within only 15 hours long</string>
+    <string name="add">Add</string>
+    <string name="add_step">Add Step</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="make_a_souvenir">Make a souvenir</string>
+    <string name="app_name">Traveling Steps</string>
+    <string name="unable_to_display_your_map">Unable to display your map</string>
+    <string name="map_registration_is_complete">Your registration is complete</string>
+    <string name="map_registration_failed">Map registration failed</string>
+    <string name="please_enter_your_name">Please enter your name</string>
+    <string name="please_enter_your_step_name">Please enter your step name</string>
+    <string name="please_enter_start_date">Please enter a start date</string>
+    <string name="please_enter_start_time">Please enter a start time</string>
+    <string name="please_enter_stop_date">Please enter an end date</string>
+    <string name="please_enter_stop_time">Please enter an end time</string>
+    <string name="photos_saved">Photo Saved</string>
+    <string name="failed_to_save_postcard">Failed to save</string>
+    <string name="map_name">Map name</string>
+
+
+</resources>
