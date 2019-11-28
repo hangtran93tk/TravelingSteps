@@ -34,7 +34,7 @@
         <activity android:name=".view.ShowMap" />
         <activity android:name=".view.ShareMap" />
         <activity android:name=".view.PrintMap" />
-        <activity android:name=".view.CaptureActivityAnyOrientation"/>
+        <activity android:name=".SimpleScannerActivity"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

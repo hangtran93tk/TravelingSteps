@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
+import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.MapShare;
@@ -42,6 +43,7 @@ public class PrintMap extends AppCompatActivity {
     private void getIntentData() {
         if(getIntent() != null){
             mapShare = (MapShare) getIntent().getSerializableExtra("MapShare");
+
         }
     }
 
@@ -50,7 +52,7 @@ public class PrintMap extends AppCompatActivity {
         txtDate.setText(mapShare.getStartDate());
         txtRegion.setText(mapShare.getRegion());
         Glide.with(getApplicationContext())
-                .load(FileUtils.createQRCode(mapShare.getId()))
+                .load(FileUtils.createQRCode("map_id=" + mapShare.getId() + "\n" + "device_id=" + BaseApplication.getDeviceID()))
                 .into(imgQR);
     }
 
@@ -67,7 +69,7 @@ public class PrintMap extends AppCompatActivity {
     }
 
     public void saveMaps(MenuItem item){
-        if (!FileUtils.savePostcard(cardView)){
+        if (FileUtils.savePostcard(cardView)){
             Toast.makeText(getApplicationContext(), getString(R.string.photos_saved), Toast.LENGTH_SHORT).show();
             return;
         }

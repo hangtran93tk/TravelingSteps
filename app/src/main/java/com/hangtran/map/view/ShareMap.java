@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -142,6 +141,7 @@ public class ShareMap extends AppCompatActivity {
         intent.putExtra("MapShare", mapShare);
         startActivity(intent);
         addShareMapInfoIntoSever(mapShare);
+
     }
     public void addShareMapInfoIntoSever(MapShare mapShare) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -150,7 +150,6 @@ public class ShareMap extends AppCompatActivity {
 
         postParams.put("id"           , mapShare.getId());
         postParams.put("device_id"    , BaseApplication.getDeviceID());
-        Log.d("put", BaseApplication.getDeviceID());
         postParams.put("owner"        , mapShare.getName());
         postParams.put("name"         , mapShare.getNameStep());
         postParams.put("color"        , mapShare.getColor());

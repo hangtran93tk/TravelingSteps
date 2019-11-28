@@ -118,6 +118,9 @@ public class AddMap extends AppCompatActivity {
                 }
 
                 addMapIntoServer();
+
+                //Intent intent = new Intent(AddMap.this, ShowMap.class);
+                //startActivity(intent);
             }
         });
         tvStartDate.setOnClickListener( new View.OnClickListener() {
@@ -167,9 +170,9 @@ public class AddMap extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject serverResponse) {
                         if (serverResponse != null) {
-                            Log.d("Debug", serverResponse.toString());
+                           // Log.d("Debug", serverResponse.toString());
                         }else {
-                            Log.d("Debug", "null");
+                            //Log.d("Debug", "null");
                         }
 
                         Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();

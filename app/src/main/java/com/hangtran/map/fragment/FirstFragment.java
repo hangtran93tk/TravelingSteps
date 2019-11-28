@@ -1,11 +1,14 @@
 package com.hangtran.map.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,14 +27,12 @@ import com.cheekiat.fabmenu.FabMenu;
 import com.cheekiat.fabmenu.listener.OnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
+import com.hangtran.map.SimpleScannerActivity;
 import com.hangtran.map.adapter.MapViewAdapter;
 import com.hangtran.map.model.Maps;
 import com.hangtran.map.view.AddMap;
-import com.hangtran.map.view.CaptureActivityAnyOrientation;
 import com.hangtran.map.view.ShowMap;
 
 import java.util.ArrayList;
@@ -52,7 +53,8 @@ public class FirstFragment extends Fragment {
     private FabMenu         fabMenu;
     private Boolean         isDelete = false;
     private ImageView       mImgTrash;
-
+    // https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
+    private TextView        mTvScanResult;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,20 +75,23 @@ public class FirstFragment extends Fragment {
             public void onItemClick(int i) {
                 switch (i) {
                     case 0:
-                        IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
-                        scanIntegrator.setPrompt("Scan");
-                        scanIntegrator.setBeepEnabled(true);
-                        //The following line if you want QR code
-                        scanIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                        scanIntegrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
-                        scanIntegrator.setOrientationLocked(true);
-                        scanIntegrator.setBarcodeImageEnabled(true);
-                        scanIntegrator.initiateScan();
+                        Log.d("VVVV","StartScan");
+                        // https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+                        startActivityForResult(new Intent(getActivity(), SimpleScannerActivity.class), 2000);
                         break;
                     case 1:
                         startActivity(new Intent(getActivity(), AddMap.class));
                         break;
                 }
+            }
+        });
+
+        mTvScanResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Open browser
+
+                // Invisible mTvScanResult
             }
         });
     }
@@ -95,6 +100,7 @@ public class FirstFragment extends Fragment {
         mRcvFirstFragment   = mRootView.findViewById(R.id.recycler_view_fragment_first);
         fabMenu             = mRootView.findViewById(R.id.fabMenu);
         mImgTrash           = mRootView.findViewById(R.id.rlTrash);
+        mTvScanResult       = mRootView.findViewById(R.id.tvScanResult);
     }
 
     @Override
@@ -123,6 +129,20 @@ public class FirstFragment extends Fragment {
             }
         });
         getMapData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2000 && resultCode == Activity.RESULT_OK){
+            Log.d("VVVV","1") ;
+            if(data!=null){
+                Log.d("VVVV","Result is: "+data.getStringExtra("KEY_SCAN_RESULT")) ;
+                mTvScanResult.setText(data.getStringExtra("KEY_SCAN_RESULT"));
+            }else{
+                Log.d("VVVV","3") ;
+            }
+        }
     }
 
     private void getMapData() {
@@ -189,23 +209,6 @@ public class FirstFragment extends Fragment {
             }
         }
         return false;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if (scanningResult != null) {
-//            if (scanningResult.getContents() != null) {
-//                scanContent = scanningResult.getContents().toString();
-//                scanFormat = scanningResult.getFormatName().toString();
-//            }
-//
-//            Toast.makeText(this,scanContent+"   type:"+scanFormat,Toast.LENGTH_SHORT).show();
-//
-//        }else{
-//            Toast.makeText(this,"Nothing scanned",Toast.LENGTH_SHORT).show();
-//        }
     }
 
 }

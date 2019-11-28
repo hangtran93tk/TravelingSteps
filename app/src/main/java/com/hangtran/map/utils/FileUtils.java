@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 /**
- *ポストカードを保存する
+ * ポストカードを保存する
  */
 public class FileUtils {
 
@@ -30,14 +30,14 @@ public class FileUtils {
             fileOutputStream.close();
             return true;
         } catch (Exception e) {
-            //Log.d("debug",e.toString());
+            //Log.d("debuggfhfg4hgfh4gfh84",e.toString());
             return false;
         } finally {
             cardView.destroyDrawingCache();
         }
     }
 
-    private static void scanFile(Context context, Uri imageUri){
+    private static void scanFile(Context context, Uri imageUri) {
         Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         scanIntent.setData(imageUri);
         context.sendBroadcast(scanIntent);
@@ -45,9 +45,10 @@ public class FileUtils {
 
     /**
      * QRコード作成する
+     *
      * @return
      */
-    public static File createQRCode(String content){
+    public static File createQRCode(String content) {
         return QRCode.from(content).withSize(250, 250).to(ImageType.PNG).file();
     }
 }
