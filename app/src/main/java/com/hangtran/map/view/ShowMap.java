@@ -1,5 +1,6 @@
 package com.hangtran.map.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class ShowMap extends AppCompatActivity {
 
     private ImageView   iv_show_map;
     private Maps        maps;
-    private TextView    txtNameMaps;
+    private TextView    txtNameMaps,txtRegionAndTime;
     private String      urlOverlap = "http://www.jz.jec.ac.jp/jecseeds/footprint/puton.php";
 
     @Override
@@ -47,7 +48,9 @@ public class ShowMap extends AppCompatActivity {
         addMaps();
     }
 
+    @SuppressLint("SetTextI18n")
     private void addMaps() {
+        txtRegionAndTime.setText(maps.getRegion() + "  " + maps.getStartDate());
         String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + maps.getImage() + ".png";
         Glide.with(getApplicationContext())
                 .load(pathImage)
@@ -64,6 +67,7 @@ public class ShowMap extends AppCompatActivity {
     private void initView() {
         iv_show_map = findViewById(R.id.iv_show_map);
         txtNameMaps = findViewById(R.id.txtNameMaps);
+        txtRegionAndTime = findViewById(R.id.txtRegionAndTime);
     }
 
     public void cancelActivity(View view) { finish(); }

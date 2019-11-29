@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,7 +58,6 @@ public class FirstFragment extends Fragment {
     private FabMenu         fabMenu;
     private Boolean         isDelete = false;
     private ImageView       mImgTrash;
-    private TextView        mTvScanResult;
 
     @Nullable
     @Override
@@ -67,8 +66,6 @@ public class FirstFragment extends Fragment {
 
         initView();
         initFloatingButton();
-
-        mTvScanResult.setVisibility(View.INVISIBLE);
 
         return mRootView;
     }
@@ -90,19 +87,6 @@ public class FirstFragment extends Fragment {
                         startActivity(new Intent(getActivity(), AddMap.class));
                         break;
                 }
-            }
-        });
-
-        mTvScanResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            // https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
-            public void onClick(View view) {
-                // Open browser
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mTvScanResult.toString()));
-                startActivity(browserIntent);
-
-                // Invisible mTvScanResult
-                mTvScanResult.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -140,7 +124,6 @@ public class FirstFragment extends Fragment {
         mRcvFirstFragment   = mRootView.findViewById(R.id.recycler_view_fragment_first);
         fabMenu             = mRootView.findViewById(R.id.fabMenu);
         mImgTrash           = mRootView.findViewById(R.id.rlTrash);
-        mTvScanResult       = mRootView.findViewById(R.id.tvScanResult);
     }
 
     @Override
@@ -185,8 +168,16 @@ public class FirstFragment extends Fragment {
                     addQRCodeInfoIntoServer(map_id );
                 }
                 else  {
-                    mTvScanResult.setVisibility(View.VISIBLE);
-                    mTvScanResult.setText(data.getStringExtra("KEY_SCAN_RESULT"));
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Mã QR")
+                            .setMessage(data.getStringExtra("KEY_SCAN_RESULT"))
+                            .setNegativeButton("Open", (dialogInterface, i) -> {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.getStringExtra("KEY_SCAN_RESULT")));
+                                startActivity(browserIntent);
+                            })
+                            .setPositiveButton("Cancel", (dialogInterface, i) -> {
+                            })
+                            .show();
                 }
 
             }else{

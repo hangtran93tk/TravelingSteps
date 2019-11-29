@@ -57,9 +57,11 @@
             app:cardCornerRadius="15dp">
 
             <TextView
+                android:id="@+id/txtRegionAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="東京都  2019-10-01 09:05:00"
+                android:gravity="center"
+                android:text="東京都 2019-10-01 09:05"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"

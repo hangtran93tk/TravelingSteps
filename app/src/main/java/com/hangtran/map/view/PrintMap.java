@@ -2,9 +2,9 @@ package com.hangtran.map.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +20,6 @@ import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.MapShare;
 import com.hangtran.map.utils.FileUtils;
-import com.hangtran.map.utils.ScreenUtils;
 
 public class PrintMap extends AppCompatActivity {
 
@@ -45,7 +44,6 @@ public class PrintMap extends AppCompatActivity {
     private void getIntentData() {
         if(getIntent() != null){
             mapShare = (MapShare) getIntent().getSerializableExtra("MapShare");
-
         }
     }
 
@@ -53,6 +51,11 @@ public class PrintMap extends AppCompatActivity {
      * QRコードの内容
      */
     private void loadUI() {
+
+        Log.d("dfgdfgdfgdf",mapShare.getNameStep());
+        Log.d("dfgdfgdfgdf",mapShare.getStartDate());
+        Log.d("dfgdfgdfgdf",mapShare.getRegion());
+
         txtNameMaps.setText(mapShare.getNameStep());
         txtDate.setText(mapShare.getStartDate());
         txtRegion.setText(mapShare.getRegion());
@@ -68,9 +71,6 @@ public class PrintMap extends AppCompatActivity {
         txtDate         = findViewById(R.id.txtDate);
         txtRegion       = findViewById(R.id.txtRegion);
         txtNameMaps     = findViewById(R.id.txtNameMaps);
-
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ScreenUtils.getWidth() - 170,ScreenUtils.getWidth() - 170);
-        imgMaps.setLayoutParams(layoutParams);
     }
 
     /**
