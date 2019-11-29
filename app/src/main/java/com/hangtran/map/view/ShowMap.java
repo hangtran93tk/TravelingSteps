@@ -53,9 +53,6 @@ public class ShowMap extends AppCompatActivity {
                 .load(pathImage)
                 .into(iv_show_map);
                 txtNameMaps.setText(maps.getName());
-//        Glide.with(getApplicationContext())
-//                .load(R.drawable.ic_maps_test).into(iv_show_map);
- //       txtNameMaps.setText(maps.getName());
     }
 
     private void getIntentData() {

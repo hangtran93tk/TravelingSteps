@@ -1,8 +1,5 @@
 package com.hangtran.map.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 /**
@@ -10,26 +7,28 @@ import java.io.Serializable;
  */
 public class Maps implements Serializable {
 
-    @SerializedName("id")         //マップのID
+    private int result_code;
+    //マップのID
     private String id;
-    @SerializedName("image")      //マップの画像
+    //マップの画像
     private String image;
-    @SerializedName("name")       //マップの名前
+    //マップの名前
     private String name;
-    @SerializedName("start_date")  //開始時間
+    //開始時間
     private String startDate;
-    @SerializedName("region")     //歩いた場所
+    private String end_date;
+    //歩いた場所
     private String region;
 
     private boolean isDeleted = false;
     private boolean isChoose = false;
 
-    public Maps(String id, String image, String name, String startDate, String region) {
-        this.id = id;
-        this.image = image;
-        this.name = name;
-        this.startDate = startDate;
-        this.region = region;
+    public int getResult_code() {
+        return result_code;
+    }
+
+    public void setResult_code(int result_code) {
+        this.result_code = result_code;
     }
 
     public String getId() {
@@ -62,6 +61,14 @@ public class Maps implements Serializable {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
     public String getRegion() {

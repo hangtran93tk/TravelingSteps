@@ -30,6 +30,7 @@ import com.hangtran.map.BaseApplication;
 import com.hangtran.map.LocationOfflineDatabase;
 import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
+import com.hangtran.map.model.Maps;
 
 import org.json.JSONObject;
 
@@ -170,20 +171,18 @@ public class AddMap extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject serverResponse) {
                         if (serverResponse != null) {
-                           // Log.d("Debug", serverResponse.toString());
-                        }else {
-                            //Log.d("Debug", "null");
+                            //Log.d("sreeryerer",serverResponse.toString());
+                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+                            intent.putExtra("Maps",new Gson().fromJson(serverResponse.toString(), Maps.class));
+                            startActivity(intent);
                         }
-
-                        Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(getApplicationContext(), ShowMap.class);
-//                        intent.putExtra("Maps",item);
-//                        startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("Debug",volleyError.toString());
+                Log.d("sreeryerer",volleyError.toString());
                         Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
                         Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
             }

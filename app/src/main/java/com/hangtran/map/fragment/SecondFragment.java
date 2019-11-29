@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class SecondFragment extends Fragment {
 
-    private static final String urlDownload = "http://www.jz.jec.ac.jp/jecseeds/footprint/share_receive.php";
+    private static final String urlDownload = "http://www.jz.jec.ac.jp/jecseeds/footprint/list.php";
 
     private View            mRootView;
     private RecyclerView    mRcvSecondFragment;
@@ -55,7 +55,7 @@ public class SecondFragment extends Fragment {
         mRcvSecondFragment.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mRcvSecondFragment.setAdapter(mMapViewAdapter);
 
-        //getShareMapData();
+        getShareMapData();
     }
     private void getShareMapData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
@@ -85,7 +85,8 @@ public class SecondFragment extends Fragment {
                 // Creating Map String Params.
                 Map<String, String> params = new HashMap<>();
 
-                params.put("deviceId", BaseApplication.getDeviceID());
+                params.put("device_id", BaseApplication.getDeviceID());
+                params.put("type", "1");
 
                 return params;
             }

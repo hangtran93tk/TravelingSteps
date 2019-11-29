@@ -112,7 +112,7 @@ public class FirstFragment extends Fragment {
         Map<String, String> postParams = new HashMap<>();
 
         postParams.put("map_id"           , map_id);
-        postParams.put("device_id"    , BaseApplication.getDeviceID());
+        postParams.put("device_id"        , BaseApplication.getDeviceID());
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
                 new Response.Listener<JSONObject>() {
@@ -130,7 +130,7 @@ public class FirstFragment extends Fragment {
             public void onErrorResponse(VolleyError volleyError) {
                 //Log.d("Debug",volleyError.toString());
                 Toast.makeText(FirstFragment.this.getContext(), "Get Map Failed", Toast.LENGTH_LONG).show();
-                Log.d("XXXXXXXX", "onErrorResponse: " + volleyError.getMessage() );
+                //Log.d("XXXXXXXX", "onErrorResponse: " + volleyError.getMessage() );
             }
         });
         requestQueue.add(request);
@@ -178,10 +178,10 @@ public class FirstFragment extends Fragment {
             Log.d("VVVV","1") ;
             if(data!=null){
                 String result = data.getStringExtra("KEY_SCAN_RESULT");
-                Log.d("VVVV","Result is: "+ result.substring(0,6)) ;
+                //Log.d("VVVV","Result is: "+ result.substring(0,6)) ;
                 if ( result.substring(0,6).equals("map_id")) {
                     String map_id = result.substring(7, result.indexOf("\n"));
-                    Log.d("QRString", map_id);
+                    //Log.d("QRString", map_id);
                     addQRCodeInfoIntoServer(map_id );
                 }
                 else  {

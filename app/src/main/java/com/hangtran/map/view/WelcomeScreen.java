@@ -77,4 +77,6 @@ public class WelcomeScreen extends AppCompatActivity {
             // 通常起動
         }
     }
+
+
 }

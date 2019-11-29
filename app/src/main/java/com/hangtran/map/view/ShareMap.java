@@ -40,7 +40,8 @@ public class ShareMap extends AppCompatActivity {
 
     private ImageView chooseColor;
     private Maps      maps;
-    private int       colorMaps;
+    private int     colorMaps;
+    //private String    colorMaps;
     private EditText  editMapName;
     private EditText  editMapStep;
     private ImageView iv_share_foot_mark;
@@ -106,6 +107,8 @@ public class ShareMap extends AppCompatActivity {
                     public void onColorPicked(int color) {
                         colorMaps = color;
                         chooseColor.setBackgroundColor(colorMaps);
+                        //colorMaps = Integer.toHexString(color);
+                        //chooseColor.setBackgroundColor(colorMaps);
                     }
                 });
     }
@@ -132,7 +135,8 @@ public class ShareMap extends AppCompatActivity {
         mapShare.setId(maps.getId());
         mapShare.setName(editMapName.getText().toString());
         mapShare.setNameStep(editMapStep.getText().toString());
-        mapShare.setColor(colorMaps + "");
+        mapShare.setColor(String.format("%06X", (0xFFFFFF & colorMaps)) + "");
+        //Log.d("COLOR", String.format("%06X", (0xFFFFFF & colorMaps)));
         mapShare.setStartDate(maps.getStartDate());
         mapShare.setRegion(maps.getRegion());
         mapShare.setImage(maps.getImage());

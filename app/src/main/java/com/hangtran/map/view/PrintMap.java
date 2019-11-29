@@ -24,6 +24,8 @@ import com.hangtran.map.utils.ScreenUtils;
 
 public class PrintMap extends AppCompatActivity {
 
+    private String      urlShareMap = "http://www.jz.jec.ac.jp/jecseeds/footprint/share.php";
+
     private ImageView   imgMaps,imgQR;
     private TextView    txtNameMaps,txtRegion,txtDate;
     private MapShare    mapShare;
@@ -47,6 +49,9 @@ public class PrintMap extends AppCompatActivity {
         }
     }
 
+    /**
+     * QRコードの内容
+     */
     private void loadUI() {
         txtNameMaps.setText(mapShare.getNameStep());
         txtDate.setText(mapShare.getStartDate());
@@ -68,6 +73,10 @@ public class PrintMap extends AppCompatActivity {
         imgMaps.setLayoutParams(layoutParams);
     }
 
+    /**
+     * ポストカードを保存
+     * @param item
+     */
     public void saveMaps(MenuItem item){
         if (FileUtils.savePostcard(cardView)){
             Toast.makeText(getApplicationContext(), getString(R.string.photos_saved), Toast.LENGTH_SHORT).show();
