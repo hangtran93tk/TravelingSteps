@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,11 +12,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.adapter.MapViewAdapter;
 import com.hangtran.map.model.Maps;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 共有されたマップの一覧
@@ -45,7 +57,6 @@ public class SecondFragment extends Fragment {
 
         //getShareMapData();
     }
-/*
     private void getShareMapData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload,
@@ -90,5 +101,4 @@ public class SecondFragment extends Fragment {
         mListPaintedMap = new ArrayList<>();
         mMapViewAdapter = new MapViewAdapter(mListPaintedMap);
     }
-    */
 }

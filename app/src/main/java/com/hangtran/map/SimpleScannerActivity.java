@@ -3,6 +3,7 @@ package com.hangtran.map;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.zxing.Result;
 
@@ -38,6 +39,7 @@ public class SimpleScannerActivity extends Activity implements ZXingScannerView.
         if(!rawResult.getText().equals("")){
             Intent result = new Intent();
             result.putExtra("KEY_SCAN_RESULT", rawResult.getText());
+            Log.d("Link", rawResult.getText());
             setResult(Activity.RESULT_OK, result);
             finish();
         }

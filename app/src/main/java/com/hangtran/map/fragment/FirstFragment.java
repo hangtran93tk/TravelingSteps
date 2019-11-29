@@ -2,6 +2,7 @@ package com.hangtran.map.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cheekiat.fabmenu.FabMenu;
@@ -35,6 +37,8 @@ import com.hangtran.map.model.Maps;
 import com.hangtran.map.view.AddMap;
 import com.hangtran.map.view.ShowMap;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +49,7 @@ import java.util.Map;
 public class FirstFragment extends Fragment {
 
     private static final String urlDownload = "http://www.jz.jec.ac.jp/jecseeds/footprint/list.php";
+    private  static final String urlUpload = "http://www.jz.jec.ac.jp/jecseeds/footprint/share_receive.php";
 
     private View            mRootView;
     private RecyclerView    mRcvFirstFragment;
@@ -53,8 +58,8 @@ public class FirstFragment extends Fragment {
     private FabMenu         fabMenu;
     private Boolean         isDelete = false;
     private ImageView       mImgTrash;
-    // https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
     private TextView        mTvScanResult;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +67,8 @@ public class FirstFragment extends Fragment {
 
         initView();
         initFloatingButton();
+
+        mTvScanResult.setVisibility(View.INVISIBLE);
 
         return mRootView;
     }
@@ -88,12 +95,45 @@ public class FirstFragment extends Fragment {
 
         mTvScanResult.setOnClickListener(new View.OnClickListener() {
             @Override
+            // https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
             public void onClick(View view) {
                 // Open browser
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mTvScanResult.toString()));
+                startActivity(browserIntent);
 
                 // Invisible mTvScanResult
+                mTvScanResult.setVisibility(View.INVISIBLE);
             }
         });
+    }
+    public void addQRCodeInfoIntoServer(String map_id) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
+
+        Map<String, String> postParams = new HashMap<>();
+
+        postParams.put("map_id"           , map_id);
+        postParams.put("device_id"    , BaseApplication.getDeviceID());
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject serverResponse) {
+                        if (serverResponse != null) {
+                            //Log.d("Debug", serverResponse.toString());
+                        }else {
+                            //Log.d("Debug", "null");
+                        }
+                        Toast.makeText(FirstFragment.this.getContext(),"Get Map Completed", Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                //Log.d("Debug",volleyError.toString());
+                Toast.makeText(FirstFragment.this.getContext(), "Get Map Failed", Toast.LENGTH_LONG).show();
+                Log.d("XXXXXXXX", "onErrorResponse: " + volleyError.getMessage() );
+            }
+        });
+        requestQueue.add(request);
     }
 
     private void initView() {
@@ -137,8 +177,18 @@ public class FirstFragment extends Fragment {
         if(requestCode == 2000 && resultCode == Activity.RESULT_OK){
             Log.d("VVVV","1") ;
             if(data!=null){
-                Log.d("VVVV","Result is: "+data.getStringExtra("KEY_SCAN_RESULT")) ;
-                mTvScanResult.setText(data.getStringExtra("KEY_SCAN_RESULT"));
+                String result = data.getStringExtra("KEY_SCAN_RESULT");
+                Log.d("VVVV","Result is: "+ result.substring(0,6)) ;
+                if ( result.substring(0,6).equals("map_id")) {
+                    String map_id = result.substring(7, result.indexOf("\n"));
+                    Log.d("QRString", map_id);
+                    addQRCodeInfoIntoServer(map_id );
+                }
+                else  {
+                    mTvScanResult.setVisibility(View.VISIBLE);
+                    mTvScanResult.setText(data.getStringExtra("KEY_SCAN_RESULT"));
+                }
+
             }else{
                 Log.d("VVVV","3") ;
             }
