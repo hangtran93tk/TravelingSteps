@@ -24,8 +24,8 @@ import com.hangtran.map.BaseApplication;
 
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,11 +73,13 @@ public class IoTDeviceLocationFinder {
      */
     public static void addStampIntoServer(Activity activity, double latitude, double longtitude) {
         RequestQueue requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        //SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
         Map<String, String> postParams = new HashMap<>();
 
-        String dateTimeNow = dateFormat.format(LocalDateTime.now());
+        //String dateTimeNow = dateFormat.format(LocalDateTime.now());
+        String dateTimeNow = LocalDateTime.now().format(dateTimeFormatter);
 
         postParams.put("device_id"    , BaseApplication.getDeviceID());
         postParams.put("stamped_at"   , dateTimeNow);

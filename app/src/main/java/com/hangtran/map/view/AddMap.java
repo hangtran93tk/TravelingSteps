@@ -32,6 +32,7 @@ import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.Maps;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -116,11 +117,7 @@ public class AddMap extends AppCompatActivity {
                     tvStopTime.setError(getString(R.string.please_enter_stop_time));
                     return;
                 }
-
                 addMapIntoServer();
-
-                //Intent intent = new Intent(AddMap.this, ShowMap.class);
-                //startActivity(intent);
             }
         });
         tvStartDate.setOnClickListener( new View.OnClickListener() {
@@ -154,7 +151,6 @@ public class AddMap extends AppCompatActivity {
      */
     private void addMapIntoServer() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        //StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload,
         Map<String, String> postParams = new HashMap<>();
         String startDate = dateFormat.format(startDates.getTimeInMillis());
         String stopDate  = dateFormat.format(endDates.getTimeInMillis());
@@ -167,17 +163,44 @@ public class AddMap extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
                 new Response.Listener<JSONObject>() {
+                    /// マップの新規登録後、詳細画面に遷移できない不具合を修正
                     @Override
                     public void onResponse(JSONObject serverResponse) {
+                        String TAG = "sugawara";
                         if (serverResponse != null) {
-                            //Log.d("sreeryerer",serverResponse.toString());
+                            // Log.d("Debug", serverResponse.toString());
                             Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), ShowMap.class);
-                            intent.putExtra("Maps",new Gson().fromJson(serverResponse.toString(), Maps.class));
-                            startActivity(intent);
+                            try {
+                                // サーバから取得したデータを使ってMaps を生成
+                                int map_id = serverResponse.getInt("id");
+                                String imageUrl = serverResponse.getString("image");
+                                String startDate = serverResponse.getString("start_date");
+                                String endDate = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
+                                String region = serverResponse.getString("region");
+
+                                Maps item = new Maps(Integer.toString(map_id), imageUrl, "", startDate, region);
+                                Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+                                intent.putExtra("Maps",item);
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "onResponse:" + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Log.d(TAG, "onResponse: null received!!");
                         }
                     }
+//                    @Override
+//                    public void onResponse(JSONObject serverResponse) {//                       if (serverResponse != null) {
+//
+//                            //Log.d("sreeryerer",serverResponse.toString());
+//                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
+//                            Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+//                            intent.putExtra("Maps",new Gson().fromJson(serverResponse.toString(), Maps.class));
+//                            startActivity(intent);
+//                        }
+//                   }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
