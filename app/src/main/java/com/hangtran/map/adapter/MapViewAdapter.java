@@ -116,12 +116,9 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
             icChoose = itemView.findViewById(R.id.icChoose);
             ivAvatar.setLayoutParams(new FrameLayout.LayoutParams(ScreenUtils.getWidth()/2 - 20,ScreenUtils.getWidth()/2 - 20));
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (chooseImageInterface != null) {
-                        chooseImageInterface.onImageChoosen(getAdapterPosition());
-                    }
+            itemView.setOnClickListener(view -> {
+                if (chooseImageInterface != null) {
+                    chooseImageInterface.onImageChoosen(getAdapterPosition());
                 }
             });
         }

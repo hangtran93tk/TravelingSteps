@@ -42,7 +42,6 @@ import java.util.Map;
 public class AddMap extends AppCompatActivity {
 
     private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/register.php";
-    //private static  final  String urlUpload = "http://10.40.112.46/sample/17jz/post_test.php";
     private static final   String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -182,7 +181,7 @@ public class AddMap extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("sreeryerer",volleyError.toString());
+                //Log.d("sreeryerer",volleyError.toString());
                         Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
                         Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
             }
