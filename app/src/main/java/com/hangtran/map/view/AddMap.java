@@ -173,10 +173,10 @@ public class AddMap extends AppCompatActivity {
                             try {
                                 // サーバから取得したデータを使ってMaps を生成
                                 int map_id = serverResponse.getInt("id");
-                                String imageUrl = serverResponse.getString("image");
+                                String imageUrl  = serverResponse.getString("image");
                                 String startDate = serverResponse.getString("start_date");
-                                String endDate = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
-                                String region = serverResponse.getString("region");
+                                String endDate   = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
+                                String region    = serverResponse.getString("region");
 
                                 Maps item = new Maps(Integer.toString(map_id), imageUrl, "", startDate, region);
                                 Intent intent = new Intent(getApplicationContext(), ShowMap.class);

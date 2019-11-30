@@ -34,10 +34,9 @@ public class ShowMap extends AppCompatActivity {
     //private static final String urlDownload = "http://www.jz.jec.ac.jp/jecseeds/footprint/detail.php";
     private static final String    urlOverlap = "http://www.jz.jec.ac.jp/jecseeds/footprint/puton.php";
 
-
-    private ImageView   iv_show_map;
-    private Maps        maps;
-    private TextView    txtNameMaps,txtRegionAndTime;
+    private ImageView        iv_show_map;
+    private Maps             maps;
+    private TextView         txtNameMaps,txtRegionAndTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +53,8 @@ public class ShowMap extends AppCompatActivity {
      * 追加されたマップを表示する
      */
     private void addMaps() {
-        txtRegionAndTime.setText(maps.getRegion() + "  " + maps.getStartDate());
+        txtRegionAndTime.setText(maps.getRegion() + "  " + maps.getStartDate().substring(0,16));
+
         String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + maps.getImage() + ".png";
         Glide.with(getApplicationContext())
                 .load(pathImage)

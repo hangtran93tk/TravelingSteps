@@ -84,10 +84,10 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
 
         holder.tvName.setText(  mapList.get(position).getName() + "\n" +
                                 mapList.get(position).getRegion() + "\n" +
-                                mapList.get(position).getStartDate());
+                                mapList.get(position).getStartDate().substring(0,16));
 
-           //                     mapList.get(position).getStartDate() + "\n" +
-          //                      mapList.get(position).getEnd_date());
+           //                     mapList.get(position).getStartDate().substring(0,16) + "\n" +
+          //                      mapList.get(position).getEnd_date().substring(0,16));
 
         if (mapList.get(position).isChoose()) {
             holder.icChoose.setVisibility(View.VISIBLE);
