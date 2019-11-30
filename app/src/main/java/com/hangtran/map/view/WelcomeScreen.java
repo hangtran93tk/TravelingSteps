@@ -62,7 +62,7 @@ public class WelcomeScreen extends AppCompatActivity {
         }
     }
     /**
-     * IoTDevice
+     * IoT　Device
      */
     protected void onResume() {
         super.onResume();

@@ -105,4 +105,4 @@ public class IoTDeviceLocationFinder {
         });
         requestQueue.add(request);
     }
-    }
+}

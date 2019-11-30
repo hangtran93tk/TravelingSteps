@@ -8,18 +8,12 @@ import java.io.Serializable;
 public class Maps implements Serializable {
 
     private int result_code;
-    //マップのID
-    private String id;
-    //マップの画像
-    private String image;
-    //マップの名前
-    private String name;
-    //開始時間
-    private String startDate;
-    private String end_date;
-    //歩いた場所
-    private String region;
-
+    private String id;          //マップのID
+    private String image;       //マップの画像
+    private String name;        //マップの名前
+    private String startDate;   //開始時間
+    private String end_date;    //終了時間
+    private String region;      //歩いた場所
     private boolean isDeleted = false;
     private boolean isChoose = false;
 

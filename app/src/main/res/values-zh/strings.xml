@@ -36,4 +36,9 @@
     <string name="please_enter_your_name">请输入你的名字</string>
     <string name="please_enter_your_step_name">请输入你的名字</string>
     <string name="map_name">地图名称</string>
+    <string name="let_try_it_sometime">请有一天</string>
+    <string name="get_map_completed">收购完成</string>
+    <string name="get_map_failed">追不上</string>
+    <string name="share_map_completed">共享完成</string>
+    <string name="share_map_failed">之后，共享失败</string>
 </resources>

@@ -109,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="85dp"
-                        android:text="行ってみてください"
+                        android:text="@string/let_try_it_sometime"
                         android:textColor="#111"
                         android:layout_marginTop="25dp"
                         android:layout_marginLeft="15dp"/>

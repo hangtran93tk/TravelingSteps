@@ -18,8 +18,6 @@ import com.hangtran.map.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-//
-
 /**
  *
  */
@@ -123,7 +121,4 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
             });
         }
     }
-
-
-
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +78,7 @@ public class FirstFragment extends Fragment {
             public void onItemClick(int i) {
                 switch (i) {
                     case 0:
-                        Log.d("VVVV","StartScan");
+                        //Log.d("VVVV","StartScan");
                         // https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
                         startActivityForResult(new Intent(getActivity(), SimpleScannerActivity.class), 2000);
                         break;
@@ -107,13 +106,13 @@ public class FirstFragment extends Fragment {
                         }else {
                             //Log.d("Debug", "null");
                         }
-                        Toast.makeText(FirstFragment.this.getContext(),"Get Map Completed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(FirstFragment.this.getContext(),getString(R.string.get_map_completed), Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //Log.d("Debug",volleyError.toString());
-                Toast.makeText(FirstFragment.this.getContext(), "Get Map Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(FirstFragment.this.getContext(), getString(R.string.get_map_failed), Toast.LENGTH_LONG).show();
                 //Log.d("XXXXXXXX", "onErrorResponse: " + volleyError.getMessage() );
             }
         });
@@ -158,7 +157,7 @@ public class FirstFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 2000 && resultCode == Activity.RESULT_OK){
-            Log.d("VVVV","1") ;
+            //Log.d("VVVV","1") ;
             if(data!=null){
                 String result = data.getStringExtra("KEY_SCAN_RESULT");
                 //Log.d("VVVV","Result is: "+ result.substring(0,6)) ;
@@ -169,7 +168,7 @@ public class FirstFragment extends Fragment {
                 }
                 else  {
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Mã QR")
+                            .setTitle("QR Code")
                             .setMessage(data.getStringExtra("KEY_SCAN_RESULT"))
                             .setNegativeButton("Open", (dialogInterface, i) -> {
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.getStringExtra("KEY_SCAN_RESULT")));
@@ -181,7 +180,7 @@ public class FirstFragment extends Fragment {
                 }
 
             }else{
-                Log.d("VVVV","3") ;
+               // Log.d("VVVV","3") ;
             }
         }
     }
@@ -251,5 +250,4 @@ public class FirstFragment extends Fragment {
         }
         return false;
     }
-
 }

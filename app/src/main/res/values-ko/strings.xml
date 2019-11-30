@@ -36,4 +36,9 @@
     <string name="map_name">발자취 이름</string>
     <string name="finishing_time">종료시간</string>
     <string name="please_enter_stop_time">종료시간을 입력하십시오</string>
+    <string name="let_try_it_sometime">언젠가 가보고하십시오</string>
+    <string name="get_map_completed">발자국 취득이 완성되었습니다</string>
+    <string name="get_map_failed">발자국 취득에 실패했습니다</string>
+    <string name="share_map_completed">발자국 공유가 완성합니다</string>
+    <string name="share_map_failed">발자국 공유가 실패했습니다</string>
 </resources>

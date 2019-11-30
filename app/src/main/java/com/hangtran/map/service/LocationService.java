@@ -130,7 +130,6 @@ public class LocationService extends Service {
             }
         }
         client.requestLocationUpdates(locationRequest, locationCallback, null);
-
     }
 
     /**

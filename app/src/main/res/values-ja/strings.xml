@@ -43,4 +43,9 @@
     <string name="please_enter_your_name">記録者の名前を入力してください</string>
     <string name="please_enter_your_step_name">あしあと名を入力してください</string>
     <string name="map_name">あしあとの名前</string>
+    <string name="let_try_it_sometime">いつか行ってみてください</string>
+    <string name="get_map_completed">あしあと取得が完成しました</string>
+    <string name="get_map_failed">あしあと取得が失敗しました</string>
+    <string name="share_map_completed">あしあと共有がが完成しま</string>
+    <string name="share_map_failed">あしあと共有が失敗しました</string>
 </resources>

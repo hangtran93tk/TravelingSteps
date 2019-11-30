@@ -40,8 +40,7 @@ public class ShareMap extends AppCompatActivity {
 
     private ImageView chooseColor;
     private Maps      maps;
-    private int     colorMaps;
-    //private String    colorMaps;
+    private int       colorMaps;
     private EditText  editMapName;
     private EditText  editMapStep;
     private ImageView iv_share_foot_mark;
@@ -107,8 +106,6 @@ public class ShareMap extends AppCompatActivity {
                     public void onColorPicked(int color) {
                         colorMaps = color;
                         chooseColor.setBackgroundColor(colorMaps);
-                        //colorMaps = Integer.toHexString(color);
-                        //chooseColor.setBackgroundColor(colorMaps);
                     }
                 });
     }
@@ -167,13 +164,13 @@ public class ShareMap extends AppCompatActivity {
                         }else {
                             //Log.d("Debug", "null");
                         }
-                        Toast.makeText(getApplicationContext(),"Share Completed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.share_map_completed), Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //Log.d("Debug",volleyError.toString());
-                Toast.makeText(getApplicationContext(), "Share Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.share_map_failed), Toast.LENGTH_LONG).show();
                 //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
             }
         });

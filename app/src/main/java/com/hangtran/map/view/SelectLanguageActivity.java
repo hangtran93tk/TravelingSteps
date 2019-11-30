@@ -26,6 +26,10 @@ public class SelectLanguageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 言語をチェックする
+     * @return
+     */
     private boolean checkLanguage() {
         int language = getSharedPreferences("Languages",MODE_PRIVATE).getInt("Language",0);
 
@@ -50,6 +54,10 @@ public class SelectLanguageActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 日本語を選ぶ
+     * @param view
+     */
     public void selectJapan(View view) {
         changeLanguage(new Locale("ja","Japan"));
         saveLanguage(1);
@@ -60,25 +68,40 @@ public class SelectLanguageActivity extends AppCompatActivity {
         getSharedPreferences("Languages",MODE_PRIVATE).edit().putInt("Language",languageCode).apply();
     }
 
+    /**
+     * 韓国語を選ぶ
+     * @param view
+     */
     public void selectSouthKorea(View view) {
         changeLanguage(new Locale("ko","Korean"));
         saveLanguage(2);
         startActivity(new Intent(getApplicationContext(),MyActivity.class));
     }
 
+    /**
+     * 英語を選ぶ
+     * @param view
+     */
     public void selectUnitedKingdom(View view) {
         changeLanguage(new Locale("en","US"));
         saveLanguage(3);
         startActivity(new Intent(getApplicationContext(),MyActivity.class));
     }
 
+    /**
+     * 中国語を選ぶ
+     * @param view
+     */
     public void selectChina(View view) {
         changeLanguage(new Locale("zh","China"));
         saveLanguage(4);
         startActivity(new Intent(getApplicationContext(),MyActivity.class));
     }
 
-
+    /**
+     * 言語を変更する
+     * @param locale
+     */
     private void changeLanguage(Locale locale){
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         Configuration configuration = new Configuration();
