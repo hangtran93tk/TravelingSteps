@@ -17,7 +17,7 @@ public class SimpleScannerActivity extends Activity implements ZXingScannerView.
         super.onCreate(state);
         // https://github.com/dm77/barcodescanner#simple-usage
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
-        setContentView(mScannerView);                // Set the scanner view as the content view
+        setContentView(mScannerView);                       // Set the scanner view as the content view
     }
 
     @Override

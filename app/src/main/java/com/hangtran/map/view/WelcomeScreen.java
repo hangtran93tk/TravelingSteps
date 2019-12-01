@@ -64,15 +64,19 @@ public class WelcomeScreen extends AppCompatActivity {
     /**
      * IoT　Device
      */
+    private String TAG = "sugawara";
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
         //Log.d(TAG, "onResume: インテント：" + intent.toString());
         //Log.d(TAG, "onResume: パッケージ名：" + intent.getPackage());
         if (intent.getPackage() != null) {
-            IoTDeviceLocationFinder.getCurrentLocation(this);
             // Qmote からの起動
-            // サーバに位置・時刻・デバイスIDを送信
+            IoTDeviceLocationFinder.getCurrentLocation(this);
+            // Qmote からの起動を連続で検知することができないため、自分にいったん遷移する
+            Intent myself = new Intent(this, WelcomeScreen.class);
+            startActivity(myself);
+            finish();
         } else {
             // 通常起動
         }

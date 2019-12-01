@@ -13,16 +13,17 @@ import com.google.android.material.tabs.TabLayout;
 import com.hangtran.map.R;
 import com.hangtran.map.adapter.MyAdapter;
 import com.hangtran.map.fragment.FirstFragment;
+import com.hangtran.map.fragment.SecondFragment;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 
 public class MyActivity extends AppCompatActivity {
 
-    private ViewPager           mVpDemo;
-    private Boolean             isEditable = false;
-    private MyAdapter           adapter;
-    private TabLayout           tabLayout;
-    private TextView            mTvRemove;
-    private View                container;
+    private ViewPager  mVpDemo;
+    private Boolean    isEditable = false;
+    private MyAdapter  adapter;
+    private TabLayout  tabLayout;
+    private TextView   mTvRemove;
+    private View       container;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +49,18 @@ public class MyActivity extends AppCompatActivity {
         tabLayout   = findViewById(R.id.tl_demo);
         mTvRemove   = findViewById(R.id.mTvRemove);
         container   = findViewById(R.id.container);
+
+        /// リストを一度表示すると再取得できない不具合を修正
+        mVpDemo.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            @Override
+            public void onPageSelected(int position) {
+                updateMaps();
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
     }
 
     public void removeMaps(View view){
@@ -63,8 +76,12 @@ public class MyActivity extends AppCompatActivity {
     }
 
     private void updateMaps() {
+        /// リストを一度表示すると再取得できない不具合を修正
         if(adapter.getItem(mVpDemo.getCurrentItem()) instanceof FirstFragment){
             ((FirstFragment)adapter.getItem(mVpDemo.getCurrentItem())).updateFloatActionButton(isEditable);
+            ((FirstFragment)adapter.getItem(mVpDemo.getCurrentItem())).refreshList();
+        } else {
+            ((SecondFragment) adapter.getItem(mVpDemo.getCurrentItem())).refreshList();
         }
     }
 

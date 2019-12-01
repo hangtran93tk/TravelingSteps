@@ -178,8 +178,8 @@ public class AddMap extends AppCompatActivity {
                                 String endDate   = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
                                 String region    = serverResponse.getString("region");
 
-                                Maps item = new Maps(Integer.toString(map_id), imageUrl, "", startDate, region);
-                                Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+                                Maps item       = new Maps(Integer.toString(map_id), imageUrl, "", startDate, region);
+                                Intent intent   = new Intent(getApplicationContext(), ShowMap.class);
                                 intent.putExtra("Maps",item);
                                 startActivity(intent);
                             } catch (JSONException e) {
@@ -190,17 +190,6 @@ public class AddMap extends AppCompatActivity {
                             Log.d(TAG, "onResponse: null received!!");
                         }
                     }
-//                    @Override
-//                    public void onResponse(JSONObject serverResponse) {//                       if (serverResponse != null) {
-//
-//                            //Log.d("sreeryerer",serverResponse.toString());
-//                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-//                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-//                            Intent intent = new Intent(getApplicationContext(), ShowMap.class);
-//                            intent.putExtra("Maps",new Gson().fromJson(serverResponse.toString(), Maps.class));
-//                            startActivity(intent);
-//                        }
-//                   }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -225,11 +214,14 @@ public class AddMap extends AppCompatActivity {
         endDates   = Calendar.getInstance();
     }
 
+    /**
+     * 開始日を選ぶ
+     */
     private void PickStartDate() {
         final Calendar calendar = Calendar.getInstance();
-        final int date = calendar.get(Calendar.DATE);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
+        final int date          = calendar.get(Calendar.DATE);
+        int month               = calendar.get(Calendar.MONTH);
+        int year                = calendar.get(Calendar.YEAR);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -238,8 +230,8 @@ public class AddMap extends AppCompatActivity {
                 dateStart[1] = i1;
                 dateStart[2] = i2;
 
-                if (timeStart[0] > 0){
-                    startDates.set(dateStart[0],dateStart[1],dateStart[2],timeStart[0],timeStart[1]);
+                if (timeStart[0] > 0) {
+                    startDates.set(dateStart[0], dateStart[1], dateStart[2], timeStart[0], timeStart[1]);
                 }
 
                 calendar.set(i, i1, i2);
@@ -250,6 +242,9 @@ public class AddMap extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    /**
+     * 開始時間を選ぶ
+     */
     private void PickStartTime() {
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -273,6 +268,9 @@ public class AddMap extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    /**
+     * 終了日を選ぶ
+     */
     private void PickStopDate() {
         final Calendar calendar = Calendar.getInstance();
         int date  = calendar.get(Calendar.DATE);
@@ -298,10 +296,13 @@ public class AddMap extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    /**
+     * 終了時間を選ぶ
+     */
     private void PickStopTime() {
         final Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int min = calendar.get(Calendar.MINUTE);
+        int hour    = calendar.get(Calendar.HOUR_OF_DAY);
+        int min     = calendar.get(Calendar.MINUTE);
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
@@ -321,7 +322,7 @@ public class AddMap extends AppCompatActivity {
         timePickerDialog.show();
     }
     /**
-     * IoTDevice
+     * IoT　Device
      */
     protected void onResume() {
         super.onResume();

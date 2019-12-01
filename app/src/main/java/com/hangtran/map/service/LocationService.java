@@ -51,11 +51,11 @@ public class LocationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        int requestCode = 0;
-        String channelId = "default";
-        String title = getString(R.string.app_name);
+        int requestCode     = 0;
+        String channelId    = "default";
+        String title        = getString(R.string.app_name);
 
-        Intent intent1 = new Intent(this, WelcomeScreen.class);
+        Intent intent1      = new Intent(this, WelcomeScreen.class);
 
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(getApplicationContext(), requestCode,

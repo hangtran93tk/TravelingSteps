@@ -15,8 +15,8 @@ import com.hangtran.map.model.Overlap;
 
 public class OverlapMap extends AppCompatActivity {
 
-    private Overlap overlap;
-    private ImageView imgOverlapMap;
+    private Overlap     overlap;
+    private ImageView   imgOverlapMap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

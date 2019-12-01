@@ -74,6 +74,7 @@ public class FirstFragment extends Fragment {
         fabMenu.addItem(R.drawable.ic_camera_64dp,R.color.blue);
 
         fabMenu.setOnItemClickListener(new OnItemClickListener() {
+
             @Override
             public void onItemClick(int i) {
                 switch (i) {
@@ -124,16 +125,26 @@ public class FirstFragment extends Fragment {
         fabMenu             = mRootView.findViewById(R.id.fabMenu);
         mImgTrash           = mRootView.findViewById(R.id.rlTrash);
     }
-
+    // リストを一度表示すると再取得できない不具合を修正
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mRcvFirstFragment.setHasFixedSize(true);
         mRcvFirstFragment.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mMapViewAdapter = new MapViewAdapter(mListPaintedMap);
         mRcvFirstFragment.setAdapter(mMapViewAdapter);
+        refreshList();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshList();
+    }
+
+    private String TAG = "sugawara";
+    public void refreshList() {
+        mMapViewAdapter.removeAll();
         mImgTrash.setOnClickListener(view1 -> {
             mMapViewAdapter.remove();
         });
@@ -240,14 +251,5 @@ public class FirstFragment extends Fragment {
             mImgTrash.setVisibility(View.GONE);
             fabMenu.setVisibility(View.VISIBLE);
         }
-    }
-
-    private boolean checkHaveChosenImage() {
-        for (Maps maps : mListPaintedMap) {
-            if (maps.isChoose()) {
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -72,13 +72,11 @@ public class IoTDeviceLocationFinder {
      *
      */
     public static void addStampIntoServer(Activity activity, double latitude, double longtitude) {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
-        //SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        RequestQueue requestQueue           = Volley.newRequestQueue(activity.getApplicationContext());
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
         Map<String, String> postParams = new HashMap<>();
 
-        //String dateTimeNow = dateFormat.format(LocalDateTime.now());
         String dateTimeNow = LocalDateTime.now().format(dateTimeFormatter);
 
         postParams.put("device_id"    , BaseApplication.getDeviceID());

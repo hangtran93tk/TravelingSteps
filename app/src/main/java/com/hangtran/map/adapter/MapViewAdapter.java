@@ -49,6 +49,13 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
         }
         notifyDataSetChanged();
     }
+    /**
+     * 画面上のあしあとをすべて削除する（DBから削除はしない）
+     */
+    public void removeAll() {
+        mapList.clear();
+        notifyDataSetChanged();
+    }
 
     private Boolean shouldRemove(){
         for (int i = 0; i < mapList.size(); i++) {
@@ -84,17 +91,13 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
 
         holder.tvName.setText(  mapList.get(position).getName() + "\n" +
                                 mapList.get(position).getRegion() + "\n" +
-                                mapList.get(position).getStartDate().substring(0,16));
-
-           //                     mapList.get(position).getStartDate().substring(0,16) + "\n" +
-          //                      mapList.get(position).getEnd_date().substring(0,16));
+                                mapList.get(position).getStart_date().substring(0,16));
 
         if (mapList.get(position).isChoose()) {
             holder.icChoose.setVisibility(View.VISIBLE);
         } else {
             holder.icChoose.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -105,7 +108,7 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivAvatar;
-        private TextView tvName;
+        private TextView  tvName;
         private ImageView icChoose;
 
         public ViewHolder(View itemView, final ChooseImageInterface chooseImageInterface) {

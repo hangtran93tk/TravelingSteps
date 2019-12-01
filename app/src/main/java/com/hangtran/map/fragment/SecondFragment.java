@@ -46,20 +46,36 @@ public class SecondFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView          = inflater.inflate(R.layout.fragment_second,container,false);
         mRcvSecondFragment =  mRootView.findViewById(R.id.recycler_view_fragment_second);
+
         return mRootView;
     }
+    // リストを一度表示すると再取得できない不具合を修正
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mRcvSecondFragment.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        mRcvSecondFragment.setHasFixedSize(true);
+        mRcvSecondFragment.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mMapViewAdapter = new MapViewAdapter(mListPaintedMap);
         mRcvSecondFragment.setAdapter(mMapViewAdapter);
+        refreshList();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshList();
+    }
 
+    public void refreshList() {
+        mMapViewAdapter.removeAll();
         getShareMapData();
     }
+
     private void getShareMapData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload,
+        //StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload,
+        // 共有されたあしあと取得時、パラメータを渡していない不具合を修正
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload + "?device_id=" + BaseApplication.getDeviceID()
+                + "&type=1",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

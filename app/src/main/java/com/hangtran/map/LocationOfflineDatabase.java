@@ -58,7 +58,6 @@ public class LocationOfflineDatabase extends SQLiteOpenHelper {
     public ArrayList<LocalLocation> getLocationList(String start_date, String stop_date) {
         ArrayList<LocalLocation> mArrays = new ArrayList<>();
         String[] params = new String[]{start_date, stop_date};
-        //Cursor mCursor = getReadableDatabase().query(TABLE_NAME, null, "date <= ? AND date >= ? ", params, null, null, null);
         Cursor mCursor = getReadableDatabase().rawQuery(SELECT_DATA_TABLE_LOCATION + " WHERE  date >= '" + start_date + "' AND date <= '" + stop_date + "'", null);
         while (mCursor.moveToNext()){
             LocalLocation localLocation = new LocalLocation();

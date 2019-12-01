@@ -8,9 +8,9 @@ import static android.content.Context.WINDOW_SERVICE;
 
 public class ScreenUtils {
 
-    private static int mWidth;
-    private static int mHeight;
-    private static float mDensity;
+    private static int      mWidth;
+    private static int      mHeight;
+    private static float    mDensity;
 
     public static int getWidth(){
         if(mWidth == 0) {
@@ -19,7 +19,7 @@ public class ScreenUtils {
             if (mWindowManager != null) {
                 mWindowManager.getDefaultDisplay().getSize(size);
             }
-            mWidth = size.x;
+            mWidth  = size.x;
             mHeight = size.y;
         }
         return mWidth;
@@ -31,7 +31,7 @@ public class ScreenUtils {
             if (mWindowManager != null) {
                 mWindowManager.getDefaultDisplay().getSize(size);
             }
-            mWidth = size.x;
+            mWidth  = size.x;
             mHeight = size.y;
         }
         return mHeight;

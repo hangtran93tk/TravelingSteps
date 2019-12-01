@@ -7,24 +7,26 @@ import java.io.Serializable;
  */
 public class Maps implements Serializable {
 
-    private int    result_code;
+    private int result_code;
     private String id;          //マップのID
     private String image;       //マップの画像
     private String name;        //マップの名前
+    /// 2019/11/30 sugawara modify START
+    /// startDate →start_date に変更。アクセサの名前も変更すること。
     private String start_date;   //開始時間
+    /// 2019/11/30 sugawara modify END
     private String end_date;    //終了時間
     private String region;      //歩いた場所
-
-    public Maps(String mapid, String imageUrl, String endDate, String startDate, String region) {
-        this.id         = mapid;
-        this.image      = imageUrl;
-        this.end_date   = endDate;
-        this.start_date = startDate;
-        this.region     = region;
-    }
-
     private boolean isDeleted = false;
     private boolean isChoose = false;
+
+    public Maps(String id, String imageUrl, String end_date, String startDate, String region) {
+        this.id = id;
+        this.image = imageUrl;
+        this.end_date = end_date;
+        this.start_date = startDate;
+        this.region = region;
+    }
 
     public int getResult_code() {
         return result_code;
@@ -58,7 +60,7 @@ public class Maps implements Serializable {
         this.name = name;
     }
 
-    public String getStartDate() {
+    public String getStart_date() {
         return start_date;
     }
 

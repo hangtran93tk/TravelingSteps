@@ -133,8 +133,7 @@ public class ShareMap extends AppCompatActivity {
         mapShare.setName(editMapName.getText().toString());
         mapShare.setNameStep(editMapStep.getText().toString());
         mapShare.setColor(String.format("%06X", (0xFFFFFF & colorMaps)) + "");
-        //Log.d("COLOR", String.format("%06X", (0xFFFFFF & colorMaps)));
-        mapShare.setStartDate(maps.getStartDate());
+        mapShare.setStartDate(maps.getStart_date());
         mapShare.setRegion(maps.getRegion());
         mapShare.setImage(maps.getImage());
 

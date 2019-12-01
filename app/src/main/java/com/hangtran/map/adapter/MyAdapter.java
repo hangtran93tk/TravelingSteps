@@ -20,9 +20,9 @@ public class MyAdapter extends FragmentStatePagerAdapter {
 
     public MyAdapter(FragmentManager fm, Activity activity) {
         super(fm);
-        listTab = new String[2];
-        listTab[0] = activity.getResources().getString(R.string.list_of_my_steps);
-        listTab[1] = activity.getResources().getString(R.string.steps_shared_from_a_friend);
+        listTab         = new String[2];
+        listTab[0]      = activity.getResources().getString(R.string.list_of_my_steps);             //first_fragment
+        listTab[1]      = activity.getResources().getString(R.string.steps_shared_from_a_friend);   //second_fragment
         mFirstFragment  = new FirstFragment();
         mSecondFragment = new SecondFragment();
     }

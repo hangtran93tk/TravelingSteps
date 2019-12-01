@@ -3,7 +3,6 @@ package com.hangtran.map;
 import android.app.Application;
 import android.content.Context;
 import android.provider.Settings;
-import android.util.Log;
 
 public class BaseApplication extends Application {
 
@@ -30,7 +29,7 @@ public class BaseApplication extends Application {
             mDeviceID = Settings.Secure.getString(getContext().getContentResolver(),
                     Settings.Secure.ANDROID_ID);
 
-            Log.d("debug",mDeviceID);
+            //Log.d("debug",mDeviceID);
         }
         return mDeviceID;
     }
