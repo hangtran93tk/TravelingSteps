@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.MapShare;
 import com.hangtran.map.model.Maps;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -37,6 +39,7 @@ import top.defaults.colorpicker.ColorPickerPopup;
 public class ShareMap extends AppCompatActivity {
 
     private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/share.php";
+    // private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/stub/share.php";
 
     private ImageView chooseColor;
     private Maps      maps;
@@ -133,13 +136,17 @@ public class ShareMap extends AppCompatActivity {
         mapShare.setName(editMapName.getText().toString());
         mapShare.setNameStep(editMapStep.getText().toString());
         mapShare.setColor(String.format("%06X", (0xFFFFFF & colorMaps)) + "");
+        //Log.d("COLOR", String.format("%06X", (0xFFFFFF & colorMaps)));
         mapShare.setStartDate(maps.getStart_date());
         mapShare.setRegion(maps.getRegion());
         mapShare.setImage(maps.getImage());
 
-        Intent intent = new Intent(ShareMap.this, PrintMap.class);
-        intent.putExtra("MapShare", mapShare);
-        startActivity(intent);
+        // 2019/12/01 sugawara modify START
+        // ここでstart すると、サーバで画像を作成する前に遷移してしまうので、JsonObjectRequestのonResponseに移動
+ //       Intent intent = new Intent(ShareMap.this, PrintMap.class);
+  //      intent.putExtra("MapShare", mapShare);
+  //      startActivity(intent);
+        // 2019/12/01 sugawara modify END
         addShareMapInfoIntoSever(mapShare);
 
     }
@@ -159,6 +166,17 @@ public class ShareMap extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject serverResponse) {
                         if (serverResponse != null) {
+                            // 2019/12/01 sugawara add START
+                            try {
+                                mapShare.setImage(serverResponse.getString("image"));
+                            }catch(JSONException e) {
+                                String TAG = "sugawara";
+                                Log.e(TAG, "onResponse: Cannot parse JSONObject: " + serverResponse.toString());
+                            }
+                            Intent intent = new Intent(ShareMap.this, PrintMap.class);
+                            intent.putExtra("MapShare", mapShare);
+                            startActivity(intent);
+                            // 2019/12/01 sugawara add END
                             //Log.d("Debug", serverResponse.toString());
                         }else {
                             //Log.d("Debug", "null");
@@ -191,4 +209,4 @@ public class ShareMap extends AppCompatActivity {
             // 通常起動
         }
     }
-    }
+}

@@ -2,6 +2,7 @@ package com.hangtran.map.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,19 +19,16 @@ import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.MapShare;
-import com.hangtran.map.model.Maps;
 import com.hangtran.map.utils.FileUtils;
 
 public class PrintMap extends AppCompatActivity {
 
-    private String      urlShareMap = "http://www.jz.jec.ac.jp/jecseeds/footprint/share.php";
-
+//    private String      urlShareMap = "http://www.jz.jec.ac.jp/jecseeds/footprint/share.php";
 
     private ImageView   imgMaps,imgQR;
     private TextView    txtNameMaps,txtRegion,txtDate;
     private MapShare    mapShare;
     private CardView    cardView;
-    private Maps        maps;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,18 +39,8 @@ public class PrintMap extends AppCompatActivity {
         getIntentData();
         loadUI();
         createToolbar();
-        getShareMapImage();
     }
 
-    public void getShareMapImage() {
-        if(getIntent() != null){
-            maps = (Maps) getIntent().getSerializableExtra("Maps");
-            String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + maps.getImage() + ".png";
-            Glide.with(getApplicationContext())
-                    .load(pathImage)
-                    .into(imgMaps );
-        }
-    }
     private void getIntentData() {
         if(getIntent() != null){
             mapShare = (MapShare) getIntent().getSerializableExtra("MapShare");
@@ -60,9 +48,12 @@ public class PrintMap extends AppCompatActivity {
     }
 
     /**
-     * QRコードの内容
+     * QRコードの内容と画像
      */
     private void loadUI() {
+
+        String TAG = "sugawara";
+        Log.d(TAG, "loadUI: " + mapShare.getImage());
 
         txtNameMaps.setText(mapShare.getNameStep());
         txtDate.setText(mapShare.getStartDate());
@@ -70,6 +61,13 @@ public class PrintMap extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(FileUtils.createQRCode("map_id=" + mapShare.getId() + "\n" + "device_id=" + BaseApplication.getDeviceID()))
                 .into(imgQR);
+        /// 2019/12/01 sugawara add START
+        // 共有のために作られた画像を反映させる
+        String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + mapShare.getImage() + ".png";
+        Glide.with(getApplicationContext())
+                .load(pathImage)
+                .into(imgMaps);
+        /// 2019/12/01 sugawara add END
     }
 
     private void initView() {
