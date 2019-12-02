@@ -17,8 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -39,7 +37,6 @@ import top.defaults.colorpicker.ColorPickerPopup;
 public class ShareMap extends AppCompatActivity {
 
     private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/share.php";
-    // private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/stub/share.php";
 
     private ImageView chooseColor;
     private Maps      maps;
@@ -118,9 +115,7 @@ public class ShareMap extends AppCompatActivity {
      * @param view
      */
     public void shareMaps(View view) {
-        /**
-         * 未入力チェックする
-         */
+         //未入力チェックする
         if (TextUtils.isEmpty(editMapName.getText())){
             Toast.makeText(getApplicationContext(), getString(R.string.please_enter_your_name), Toast.LENGTH_SHORT).show();
             return;
@@ -136,17 +131,9 @@ public class ShareMap extends AppCompatActivity {
         mapShare.setName(editMapName.getText().toString());
         mapShare.setNameStep(editMapStep.getText().toString());
         mapShare.setColor(String.format("%06X", (0xFFFFFF & colorMaps)) + "");
-        //Log.d("COLOR", String.format("%06X", (0xFFFFFF & colorMaps)));
         mapShare.setStartDate(maps.getStart_date());
         mapShare.setRegion(maps.getRegion());
         mapShare.setImage(maps.getImage());
-
-        // 2019/12/01 sugawara modify START
-        // ここでstart すると、サーバで画像を作成する前に遷移してしまうので、JsonObjectRequestのonResponseに移動
- //       Intent intent = new Intent(ShareMap.this, PrintMap.class);
-  //      intent.putExtra("MapShare", mapShare);
-  //      startActivity(intent);
-        // 2019/12/01 sugawara modify END
         addShareMapInfoIntoSever(mapShare);
 
     }
@@ -162,35 +149,29 @@ public class ShareMap extends AppCompatActivity {
         postParams.put("color"        , mapShare.getColor());
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject serverResponse) {
-                        if (serverResponse != null) {
-                            // 2019/12/01 sugawara add START
-                            try {
-                                mapShare.setImage(serverResponse.getString("image"));
-                            }catch(JSONException e) {
-                                String TAG = "sugawara";
-                                Log.e(TAG, "onResponse: Cannot parse JSONObject: " + serverResponse.toString());
-                            }
+                serverResponse -> {
+                    if (serverResponse != null) {
+                        // 2019/12/01 sugawara add START
+                        try {
+                            mapShare.setImage(serverResponse.getString("image"));
                             Intent intent = new Intent(ShareMap.this, PrintMap.class);
                             intent.putExtra("MapShare", mapShare);
                             startActivity(intent);
-                            // 2019/12/01 sugawara add END
-                            //Log.d("Debug", serverResponse.toString());
-                        }else {
-                            //Log.d("Debug", "null");
+                        }catch(JSONException e) {
+                            String TAG = "sugawara";
+                            Log.e(TAG, "onResponse: Cannot parse JSONObject: " + serverResponse.toString());
                         }
-                        Toast.makeText(getApplicationContext(), getString(R.string.share_map_completed), Toast.LENGTH_LONG).show();
+                        // 2019/12/01 sugawara add END
+                        //Log.d("Debug", serverResponse.toString());
+                    }else {
+                        //Log.d("Debug", "null");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                //Log.d("Debug",volleyError.toString());
-                Toast.makeText(getApplicationContext(), getString(R.string.share_map_failed), Toast.LENGTH_LONG).show();
-                //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
-            }
-        });
+                    Toast.makeText(getApplicationContext(), getString(R.string.share_map_completed), Toast.LENGTH_LONG).show();
+                }, volleyError -> {
+                    //Log.d("Debug",volleyError.toString());
+                    Toast.makeText(getApplicationContext(), getString(R.string.share_map_failed), Toast.LENGTH_LONG).show();
+                    //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
+                });
         requestQueue.add(request);
     }
     /**

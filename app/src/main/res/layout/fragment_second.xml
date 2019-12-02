@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<androidx.recyclerview.widget.RecyclerView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/recycler_view_fragment_second">
+    android:layout_height="match_parent"
+    android:background="#E9E9E9">
 
-</androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_fragment_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</LinearLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+    <com.cheekiat.fabmenu.FabMenu
+        android:id="@+id/fabMenu"
+        android:layout_height="match_parent"
+        android:layout_width="50dp"
+        app:collapseIcon="@drawable/ic_close_black_24dp"
+        app:expandIcon="@drawable/ic_add_black_24dp"
+        app:space="10dp"
+        app:fabBackgroundColor="@color/blue"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/rlTrash"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/trash_bin"
+        android:background="@drawable/bg_circle"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="35dp"
+        android:padding="10dp"/>
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/transparentView"
+        android:layout_width="match_parent"
+        android:background="#73000000"
+        android:layout_height="match_parent"/>
+</FrameLayout>
