@@ -48,40 +48,43 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_maps_test" />
             </androidx.cardview.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp">
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtNameMaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Nothing"
                     android:textColor="#111"
                     android:textSize="17sp"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:text="Nothing"
-                    android:textStyle="bold"
-                    android:id="@+id/txtNameMaps"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/txtRegion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nothing"
                     android:layout_marginTop="5dp"
+                    android:ellipsize="end"
                     android:singleLine="true"
-                    android:ellipsize="end"/>
+                    android:text="nothing" />
+
                 <TextView
                     android:id="@+id/txtDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="25/11/2019 01:08"
                     android:layout_marginTop="5dp"
+                    android:ellipsize="end"
                     android:singleLine="true"
-                    android:ellipsize="end"/>
+                    android:text="25/11/2019 01:08" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -91,45 +94,48 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
-                        android:background="@drawable/ic_custom_message"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ic_custom_message" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#fff"
-                        android:text="Message"
                         android:layout_marginLeft="10dp"
+                        android:background="#fff"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:textStyle="bold"
+                        android:text="Message"
+                        android:textColor="@color/blue"
                         android:textSize="17sp"
-                        android:textColor="@color/blue"/>
+                        android:textStyle="bold" />
+
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="31dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="25dp"
                         android:layout_marginRight="85dp"
                         android:text="@string/let_try_it_sometime"
-                        android:textColor="#111"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginLeft="15dp"/>
+                        android:textColor="#111" />
+
                     <ImageView
                         android:id="@+id/imgQR"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="73dp"
+                        android:layout_height="75dp"
                         android:layout_gravity="right|center_vertical"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
-                        android:src="@drawable/ic_qr_test"/>
+                        android:src="@drawable/ic_qr_test" />
                 </FrameLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="From"
                     android:layout_marginTop="5dp"
-                    android:textSize="17sp"
+                    android:layout_marginRight="100dp"
                     android:gravity="right"
-                    android:layout_marginRight="100dp"/>
+                    android:text="From :"
+                    android:textSize="17sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -56,7 +56,7 @@ public class PrintMap extends AppCompatActivity {
         Log.d(TAG, "loadUI: " + mapShare.getImage());
 
         txtNameMaps.setText(mapShare.getNameStep());
-        txtDate.setText(mapShare.getStartDate());
+        txtDate.setText(mapShare.getStartDate().substring(0,16));
         txtRegion.setText(mapShare.getRegion());
         Glide.with(getApplicationContext())
                 .load(FileUtils.createQRCode("map_id=" + mapShare.getId() + "\n" + "device_id=" + BaseApplication.getDeviceID()))

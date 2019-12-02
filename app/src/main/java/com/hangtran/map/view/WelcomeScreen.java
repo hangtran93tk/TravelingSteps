@@ -35,6 +35,11 @@ public class WelcomeScreen extends AppCompatActivity {
             finish();
         }
     }
+
+    /**
+     * Permission Check
+     * @return
+     */
     private boolean checkMultiPermissions(){
         // 位置情報の Permission
         int permissionLocation = ContextCompat.checkSelfPermission(this,

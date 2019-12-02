@@ -1,6 +1,7 @@
 package com.hangtran.map.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,10 @@ public class SecondFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView          = inflater.inflate(R.layout.fragment_second,container,false);
         mRcvSecondFragment =  mRootView.findViewById(R.id.recycler_view_fragment_second);
-
         return mRootView;
     }
+
+    /// 2019/11/30 d.sugawara modify START\
     // リストを一度表示すると再取得できない不具合を修正
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -69,20 +71,22 @@ public class SecondFragment extends Fragment {
         mMapViewAdapter.removeAll();
         getShareMapData();
     }
+    /// 2019/11/30 d.sugawara modify END
 
+    private String TAG = "sugawara";
     private void getShareMapData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        //StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload,
+        /// 2019/11/30 d.sugawara modify START
         // 共有されたあしあと取得時、パラメータを渡していない不具合を修正
         StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload + "?device_id=" + BaseApplication.getDeviceID()
                 + "&type=1",
+                /// 2019/11/30 d.sugawara modify END
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response != null){
                             mListPaintedMap.addAll(new Gson().fromJson(response, new TypeToken<ArrayList<Maps>>(){}.getType()));
-
-                            //Log.d("debug",mListPaintedMap.size() + "");
+                            //Log.d(TAG, "onResponse: " + response);
 
                             mMapViewAdapter.notifyDataSetChanged();
                         }
@@ -91,7 +95,7 @@ public class SecondFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        //Log.d("fsgfdfgdfgdf",volleyError.toString());
+                        Log.d(TAG, "onErrorResponse: " + volleyError.toString());
                         Toast.makeText(getActivity(), getString(R.string.unable_to_display_your_map), Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -110,11 +114,11 @@ public class SecondFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mListPaintedMap = new ArrayList<>();
-        mMapViewAdapter = new MapViewAdapter(mListPaintedMap);
     }
 }
