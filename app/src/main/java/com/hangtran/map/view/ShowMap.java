@@ -58,6 +58,7 @@ public class ShowMap extends AppCompatActivity {
      * 追加されたマップを表示する
      */
     private void addMaps() {
+
         txtRegionAndTime.setText(maps.getRegion() + " " + maps.getStart_date().substring(0,16) + " - " + maps.getEnd_date().substring(11,16));
         String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + maps.getImage() + ".png";
         Glide.with(getApplicationContext())

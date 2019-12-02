@@ -178,7 +178,7 @@ public class AddMap extends AppCompatActivity {
                                 String endDate   = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
                                 String region    = serverResponse.getString("region");
 
-                                Maps item       = new Maps(Integer.toString(map_id), imageUrl, "", startDate, region);
+                                Maps item       = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate, region);
                                 Intent intent   = new Intent(getApplicationContext(), ShowMap.class);
                                 intent.putExtra("Maps",item);
                                 startActivity(intent);
