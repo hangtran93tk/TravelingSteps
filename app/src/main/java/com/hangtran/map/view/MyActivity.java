@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.hangtran.map.R;
 import com.hangtran.map.adapter.MyAdapter;
 import com.hangtran.map.fragment.FirstFragment;
+import com.hangtran.map.fragment.SecondFragment;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 
 public class MyActivity extends AppCompatActivity {
@@ -79,6 +80,8 @@ public class MyActivity extends AppCompatActivity {
         if(adapter.getItem(mVpDemo.getCurrentItem()) instanceof FirstFragment){
             ((FirstFragment)adapter.getItem(mVpDemo.getCurrentItem())).updateFloatActionButton(isEditable);
             ((FirstFragment)adapter.getItem(mVpDemo.getCurrentItem())).refreshList();
+        } else {
+            ((SecondFragment) adapter.getItem(mVpDemo.getCurrentItem())).refreshList();
         }
     }
 

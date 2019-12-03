@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -86,37 +90,60 @@ public class AddMap extends AppCompatActivity {
      * 未入力チェック
      */
     private void addEvents() {
-        btnAddMap.setOnClickListener(view -> {
-            if (TextUtils.isEmpty(edit_map_name.getText())){
-                edit_map_name.setError(getString(R.string.please_enter_your_name));
-                return;
-            }
+        btnAddMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(edit_map_name.getText())){
+                    edit_map_name.setError(getString(R.string.please_enter_your_name));
+                    return;
+                }
 
-            if (TextUtils.isEmpty(tvStartDate.getText())){
-                tvStartDate.setError(getString(R.string.please_enter_start_date));
-                return;
-            }
+                if (TextUtils.isEmpty(tvStartDate.getText())){
+                    tvStartDate.setError(getString(R.string.please_enter_start_date));
+                    return;
+                }
 
-            if (TextUtils.isEmpty(tvStartTime.getText())){
-                tvStartTime.setError(getString(R.string.please_enter_start_time));
-                return;
-            }
+                if (TextUtils.isEmpty(tvStartTime.getText())){
+                    tvStartTime.setError(getString(R.string.please_enter_start_time));
+                    return;
+                }
 
-            if (TextUtils.isEmpty(tvStopDate.getText())){
-                tvStopDate.setError(getString(R.string.please_enter_stop_date));
-                return;
-            }
+                if (TextUtils.isEmpty(tvStopDate.getText())){
+                    tvStopDate.setError(getString(R.string.please_enter_stop_date));
+                    return;
+                }
 
-            if (TextUtils.isEmpty(tvStopTime.getText())){
-                tvStopTime.setError(getString(R.string.please_enter_stop_time));
-                return;
+                if (TextUtils.isEmpty(tvStopTime.getText())){
+                    tvStopTime.setError(getString(R.string.please_enter_stop_time));
+                    return;
+                }
+                addMapIntoServer();
             }
-            addMapIntoServer();
         });
-        tvStartDate.setOnClickListener(view -> PickStartDate());
-        tvStartTime.setOnClickListener(view -> PickStartTime());
-        tvStopDate.setOnClickListener(view -> PickStopDate());
-        tvStopTime.setOnClickListener(view -> PickStopTime());
+        tvStartDate.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PickStartDate();
+            }
+        });
+        tvStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PickStartTime();
+            }
+        });
+        tvStopDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PickStopDate();
+            }
+        });
+        tvStopTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PickStopTime();
+            }
+        });
     }
 
     /**
@@ -134,36 +161,43 @@ public class AddMap extends AppCompatActivity {
         postParams.put("name"         , edit_map_name.getText().toString());
         postParams.put("location"     , new Gson().toJson(new LocationOfflineDatabase().getLocationList(startDate,stopDate)));
 
-        /// マップの新規登録後、詳細画面に遷移できない不具合を修正
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
-                serverResponse -> {
-                    String TAG = "sugawara";
-                    if (serverResponse != null) {
-                        // Log.d("Debug", serverResponse.toString());
-                        Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-                        try {
-                            // サーバから取得したデータを使ってMaps を生成
-                            int map_id = serverResponse.getInt("id");
-                            String imageUrl  = serverResponse.getString("image");
-                            String startDate1 = serverResponse.getString("start_date");
-                            String endDate   = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
-                            String region    = serverResponse.getString("region");
+                new Response.Listener<JSONObject>() {
+                    /// マップの新規登録後、詳細画面に遷移できない不具合を修正
+                    @Override
+                    public void onResponse(JSONObject serverResponse) {
+                        String TAG = "sugawara";
+                        if (serverResponse != null) {
+                            // Log.d("Debug", serverResponse.toString());
+                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
+                            try {
+                                // サーバから取得したデータを使ってMaps を生成
+                                int map_id = serverResponse.getInt("id");
+                                String imageUrl  = serverResponse.getString("image");
+                                String startDate = serverResponse.getString("start_date");
+                                String endDate   = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
+                                String region    = serverResponse.getString("region");
 
-                            Maps item       = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
-                            Intent intent   = new Intent(getApplicationContext(), ShowMap.class);
-                            intent.putExtra("Maps",item);
-                            startActivity(intent);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "onResponse:" + e.getMessage());
-                            e.printStackTrace();
+                                Maps item       = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate, region);
+                                Intent intent   = new Intent(getApplicationContext(), ShowMap.class);
+                                intent.putExtra("Maps",item);
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "onResponse:" + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Log.d(TAG, "onResponse: null received!!");
                         }
-                    }else {
-                        Log.d(TAG, "onResponse: null received!!");
                     }
-                }, volleyError -> {
-                    Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
-                    //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
-                });
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                //Log.d("sreeryerer",volleyError.toString());
+                        Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
+                        Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
+            }
+        });
 
         requestQueue.add(request);
     }
@@ -188,19 +222,22 @@ public class AddMap extends AppCompatActivity {
         final int date          = calendar.get(Calendar.DATE);
         int month               = calendar.get(Calendar.MONTH);
         int year                = calendar.get(Calendar.YEAR);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (datePicker, i, i1, i2) -> {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
 
-            dateStart[0] = i;
-            dateStart[1] = i1;
-            dateStart[2] = i2;
+                dateStart[0] = i;
+                dateStart[1] = i1;
+                dateStart[2] = i2;
 
-            if (timeStart[0] > 0) {
-                startDates.set(dateStart[0], dateStart[1], dateStart[2], timeStart[0], timeStart[1]);
+                if (timeStart[0] > 0) {
+                    startDates.set(dateStart[0], dateStart[1], dateStart[2], timeStart[0], timeStart[1]);
+                }
+
+                calendar.set(i, i1, i2);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                tvStartDate.setText(simpleDateFormat.format(calendar.getTime()));
             }
-
-            calendar.set(i, i1, i2);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            tvStartDate.setText(simpleDateFormat.format(calendar.getTime()));
         }, year, month, date);
         datePickerDialog.show();
     }
@@ -212,18 +249,21 @@ public class AddMap extends AppCompatActivity {
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, i, i1) -> {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
-            timeStart[0] = i;
-            timeStart[1] = i1;
+                timeStart[0] = i;
+                timeStart[1] = i1;
 
-            if (dateStart[0] > 0){
-                startDates.set(dateStart[0],dateStart[1],dateStart[2],timeStart[0],timeStart[1]);
+                if (dateStart[0] > 0){
+                    startDates.set(dateStart[0],dateStart[1],dateStart[2],timeStart[0],timeStart[1]);
+                }
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                calendar.set(0, 0, 0, i, i1);
+                tvStartTime.setText(simpleDateFormat.format(calendar.getTime()));
             }
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-            calendar.set(0, 0, 0, i, i1);
-            tvStartTime.setText(simpleDateFormat.format(calendar.getTime()));
         }, hour, min, true);
         timePickerDialog.show();
     }
@@ -263,18 +303,21 @@ public class AddMap extends AppCompatActivity {
         final Calendar calendar = Calendar.getInstance();
         int hour    = calendar.get(Calendar.HOUR_OF_DAY);
         int min     = calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, i, i1) -> {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
-            timeEnd[0] = i;
-            timeEnd[1] = i1;
+                timeEnd[0] = i;
+                timeEnd[1] = i1;
 
-            if (dateEnd[0] > 0){
-                endDates.set(dateEnd[0],dateEnd[1],dateEnd[2],timeEnd[0],timeEnd[1]);
+                if (dateEnd[0] > 0){
+                    endDates.set(dateEnd[0],dateEnd[1],dateEnd[2],timeEnd[0],timeEnd[1]);
+                }
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                calendar.set(0, 0, 0, i, i1);
+                tvStopTime.setText(simpleDateFormat.format(calendar.getTime()));
             }
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-            calendar.set(0, 0, 0, i, i1);
-            tvStopTime.setText(simpleDateFormat.format(calendar.getTime()));
         }, hour, min, true);
         timePickerDialog.show();
     }

@@ -16,7 +16,6 @@ import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.service.LocationService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class WelcomeScreen extends AppCompatActivity {
 
@@ -36,38 +35,41 @@ public class WelcomeScreen extends AppCompatActivity {
             finish();
         }
     }
+
     /**
-     * Check MultiPermissions
+     * Permission Check
      * @return
      */
-    private boolean checkMultiPermissions() {
-        int permissionOpenCamera   = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        int locationPermission     = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        int permissionReadStorage  = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        int permissionWriteStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    private boolean checkMultiPermissions(){
+        // 位置情報の Permission
+        int permissionLocation = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        ArrayList reqPermissions = new ArrayList<>();
 
-        List<String> listPermissionsNeeded = new ArrayList<>();
-        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        // 位置情報の Permission が許可されているか確認
+        if (permissionLocation == PackageManager.PERMISSION_GRANTED) {
+            // 許可済
         }
-        if (permissionOpenCamera != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.CAMERA);
+        else{
+            // 未許可
+            reqPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (permissionReadStorage != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        }
-        if (permissionWriteStorage != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),1);
+
+        // 未許可チェック
+        if (!reqPermissions.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    (String[])reqPermissions.toArray(new String[0]),
+                    REQUEST_MULTI_PERMISSIONS);
             return false;
         }
-        return true;
+        else{
+            return true;
+        }
     }
     /**
      * IoT　Device
      */
+    private String TAG = "sugawara";
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
@@ -84,4 +86,6 @@ public class WelcomeScreen extends AppCompatActivity {
             // 通常起動
         }
     }
+
+
 }

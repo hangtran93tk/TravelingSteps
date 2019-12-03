@@ -124,6 +124,8 @@ public class PrintMap extends AppCompatActivity {
             IoTDeviceLocationFinder.getCurrentLocation(this);
             // Qmote からの起動
             // サーバに位置・時刻・デバイスIDを送信
+        } else {
+            // 通常起動
         }
     }
 }

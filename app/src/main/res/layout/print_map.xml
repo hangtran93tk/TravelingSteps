@@ -111,7 +111,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="31dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="25dp"
                         android:layout_marginRight="85dp"
@@ -120,10 +120,11 @@
 
                     <ImageView
                         android:id="@+id/imgQR"
-                        android:layout_width="75dp"
+                        android:layout_width="73dp"
                         android:layout_height="75dp"
                         android:layout_gravity="right|center_vertical"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
                         android:src="@drawable/ic_qr_test" />
                 </FrameLayout>
 

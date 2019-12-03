@@ -25,12 +25,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cheekiat.fabmenu.FabMenu;
+import com.cheekiat.fabmenu.listener.OnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.SimpleScannerActivity;
-import com.hangtran.map.adapter.MyMapAdapter;
+import com.hangtran.map.adapter.MapViewAdapter;
 import com.hangtran.map.model.Maps;
 import com.hangtran.map.view.AddMap;
 import com.hangtran.map.view.ShowMap;
@@ -51,7 +52,7 @@ public class FirstFragment extends Fragment {
 
     private View            mRootView;
     private RecyclerView    mRcvFirstFragment;
-    private MyMapAdapter mMyMapAdapter;
+    private MapViewAdapter  mMapViewAdapter;
     private ArrayList<Maps> mListPaintedMap = new ArrayList<>();
     private FabMenu         fabMenu;
     private Boolean         isDelete = false;
@@ -72,22 +73,25 @@ public class FirstFragment extends Fragment {
         fabMenu.addItem(R.drawable.ic_image_64dp,R.color.blue);
         fabMenu.addItem(R.drawable.ic_camera_64dp,R.color.blue);
 
-        fabMenu.setOnItemClickListener(i -> {
-            switch (i) {
-                case 0:
-                    //Log.d("VVVV","StartScan");
-                    // https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
-                    startActivityForResult(new Intent(getActivity(), SimpleScannerActivity.class), 2000);
-                    break;
-                case 1:
-                    startActivity(new Intent(getActivity(), AddMap.class));
-                    break;
+        fabMenu.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(int i) {
+                switch (i) {
+                    case 0:
+                        //Log.d("VVVV","StartScan");
+                        // https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+                        startActivityForResult(new Intent(getActivity(), SimpleScannerActivity.class), 2000);
+                        break;
+                    case 1:
+                        startActivity(new Intent(getActivity(), AddMap.class));
+                        break;
+                }
             }
         });
     }
-
-    private void addQRCodeInfoIntoServer(String map_id) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+    public void addQRCodeInfoIntoServer(String map_id) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
 
         Map<String, String> postParams = new HashMap<>();
 
@@ -98,6 +102,11 @@ public class FirstFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject serverResponse) {
+                        if (serverResponse != null) {
+                            //Log.d("Debug", serverResponse.toString());
+                        }else {
+                            //Log.d("Debug", "null");
+                        }
                         Toast.makeText(FirstFragment.this.getContext(),getString(R.string.get_map_completed), Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
@@ -122,8 +131,8 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mRcvFirstFragment.setHasFixedSize(true);
         mRcvFirstFragment.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        mMyMapAdapter = new MyMapAdapter(mListPaintedMap);
-        mRcvFirstFragment.setAdapter(mMyMapAdapter);
+        mMapViewAdapter = new MapViewAdapter(mListPaintedMap);
+        mRcvFirstFragment.setAdapter(mMapViewAdapter);
         refreshList();
     }
 
@@ -135,11 +144,11 @@ public class FirstFragment extends Fragment {
 
     private String TAG = "sugawara";
     public void refreshList() {
-        mMyMapAdapter.removeAll();
+        mMapViewAdapter.removeAll();
         mImgTrash.setOnClickListener(view1 -> {
-            mMyMapAdapter.remove();
+            mMapViewAdapter.remove();
         });
-        mMyMapAdapter.setChooseImageInterface(new MyMapAdapter.ChooseImageInterface() {
+        mMapViewAdapter.setChooseImageInterface(new MapViewAdapter.ChooseImageInterface() {
             @Override
             public void onImageChoosen(int position) {
                 if (!isDelete) {
@@ -149,7 +158,7 @@ public class FirstFragment extends Fragment {
                     startActivity(intent);
                     return;
                 }
-                mMyMapAdapter.changeStatus(position);
+                mMapViewAdapter.changeStatus(position);
             }
         });
         getMapData();
@@ -181,6 +190,8 @@ public class FirstFragment extends Fragment {
                             .show();
                 }
 
+            }else{
+               // Log.d("VVVV","3") ;
             }
         }
     }
@@ -197,7 +208,7 @@ public class FirstFragment extends Fragment {
 
                             //Log.d("debug",mListPaintedMap.size() + "");
 
-                            mMyMapAdapter.notifyDataSetChanged();
+                            mMapViewAdapter.notifyDataSetChanged();
                         }
                     }
                 },
@@ -235,7 +246,7 @@ public class FirstFragment extends Fragment {
         } else {
             for (int i = 0; i < mListPaintedMap.size(); i++) {
                 mListPaintedMap.get(i).setChoose(false);
-                mMyMapAdapter.notifyItemChanged(i);
+                mMapViewAdapter.notifyItemChanged(i);
             }
             mImgTrash.setVisibility(View.GONE);
             fabMenu.setVisibility(View.VISIBLE);

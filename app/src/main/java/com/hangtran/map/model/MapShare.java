@@ -9,19 +9,10 @@ public class MapShare implements Serializable {
     private String nameStep;
     private String color;
     private String startDate;
-    private String endDate;
     private String region;
 
     private boolean isDeleted = false;
     private boolean isChoose = false;
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
 
     public String getId() {
         return id;
@@ -94,6 +85,4 @@ public class MapShare implements Serializable {
     public void setChoose(boolean choose) {
         isChoose = choose;
     }
-
-
 }
