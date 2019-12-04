@@ -1,5 +1,6 @@
 package com.hangtran.map.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  *
  */
-public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHolder> {
+public class MyMapAdapter extends RecyclerView.Adapter<MyMapAdapter.ViewHolder> {
 
     public interface ChooseImageInterface {
         void onImageChoosen(int position);
@@ -29,7 +30,7 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
 
     public ArrayList<Maps> mapList;
 
-    public MapViewAdapter(ArrayList<Maps> mapList) {
+    public MyMapAdapter(ArrayList<Maps> mapList) {
         this.mapList = mapList;
     }
 
@@ -74,13 +75,14 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
 
     @NonNull
     @Override
-    public MapViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyMapAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_map, parent, false);
         return new ViewHolder(itemView, chooseImageInterface);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MapViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyMapAdapter.ViewHolder holder, int position) {
 
         String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + mapList.get(position).getImage() + ".png";
 
@@ -105,13 +107,13 @@ public class MapViewAdapter extends RecyclerView.Adapter<MapViewAdapter.ViewHold
         return mapList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivAvatar;
         private TextView  tvName;
         private ImageView icChoose;
 
-        public ViewHolder(View itemView, final ChooseImageInterface chooseImageInterface) {
+        ViewHolder(View itemView, final ChooseImageInterface chooseImageInterface) {
             super(itemView);
 
             ivAvatar = itemView.findViewById(R.id.iv_avatar);

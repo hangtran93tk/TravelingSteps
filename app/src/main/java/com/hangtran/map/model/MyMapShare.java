@@ -1,27 +1,16 @@
 package com.hangtran.map.model;
 
-import java.io.Serializable;
+public class MyMapShare {
 
-public class MapShare implements Serializable {
     private String id;
     private String image;
+    private String owner;
     private String name;
-    private String nameStep;
-    private String color;
     private String startDate;
     private String endDate;
     private String region;
-
     private boolean isDeleted = false;
     private boolean isChoose = false;
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
 
     public String getId() {
         return id;
@@ -39,6 +28,14 @@ public class MapShare implements Serializable {
         this.image = image;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,28 +44,20 @@ public class MapShare implements Serializable {
         this.name = name;
     }
 
-    public String getNameStep() {
-        return nameStep;
-    }
-
-    public void setNameStep(String nameStep) {
-        this.nameStep = nameStep;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public String getStartDate() {
         return startDate;
     }
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getRegion() {
@@ -94,6 +83,4 @@ public class MapShare implements Serializable {
     public void setChoose(boolean choose) {
         isChoose = choose;
     }
-
-
 }
