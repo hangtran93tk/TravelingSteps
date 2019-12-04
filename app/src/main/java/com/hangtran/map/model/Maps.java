@@ -11,10 +11,7 @@ public class Maps implements Serializable {
     private String id;          //マップのID
     private String image;       //マップの画像
     private String name;        //マップの名前
-    /// 2019/11/30 sugawara modify START
-    /// startDate →start_date に変更。アクセサの名前も変更すること。
     private String start_date;   //開始時間
-    /// 2019/11/30 sugawara modify END
     private String end_date;    //終了時間
     private String region;      //歩いた場所
     private boolean isDeleted = false;

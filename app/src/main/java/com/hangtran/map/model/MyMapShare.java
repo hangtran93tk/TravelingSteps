@@ -6,8 +6,10 @@ public class MyMapShare {
     private String image;
     private String owner;
     private String name;
-    private String startDate;
-    private String endDate;
+    private String start_date;
+    private String end_date;
+    private String device_id;
+    private String color;
     private String region;
     private boolean isDeleted = false;
     private boolean isChoose = false;
@@ -44,20 +46,36 @@ public class MyMapShare {
         this.name = name;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
+    }
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getRegion() {

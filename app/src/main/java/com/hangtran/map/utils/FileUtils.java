@@ -1,12 +1,14 @@
 package com.hangtran.map.utils;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 
 import androidx.cardview.widget.CardView;
+
+import com.hangtran.map.BaseApplication;
 
 import net.glxn.qrgen.android.QRCode;
 import net.glxn.qrgen.core.image.ImageType;
@@ -24,10 +26,16 @@ public class FileUtils {
         cardView.buildDrawingCache();
         Bitmap cache = cardView.getDrawingCache();
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory() + "/" + System.currentTimeMillis() + ".png");
+            File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/");
+            @SuppressLint("DefaultLocale") String fileName = String.format("%d.png", System.currentTimeMillis());
+            File outFile = new File(dir, fileName);
+
+            FileOutputStream fileOutputStream = new FileOutputStream( outFile);
             cache.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
+
+            scanFile(outFile);
             return true;
         } catch (Exception e) {
             //Log.d("debuggfhfg4hgfh4gfh84",e.toString());
@@ -37,10 +45,10 @@ public class FileUtils {
         }
     }
 
-    private static void scanFile(Context context, Uri imageUri) {
+    private static void scanFile(File file) {
         Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        scanIntent.setData(imageUri);
-        context.sendBroadcast(scanIntent);
+        scanIntent.setData(Uri.fromFile(file));
+        BaseApplication.getContext().sendBroadcast(scanIntent);
     }
 
     /**

@@ -61,13 +61,13 @@ public class PrintMap extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(FileUtils.createQRCode("map_id=" + mapShare.getId() + "\n" + "device_id=" + BaseApplication.getDeviceID()))
                 .into(imgQR);
-        /// 2019/12/01 sugawara add START
+
         // 共有のために作られた画像を反映させる
         String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + mapShare.getImage() + ".png";
         Glide.with(getApplicationContext())
                 .load(pathImage)
                 .into(imgMaps);
-        /// 2019/12/01 sugawara add END
+
     }
 
     private void initView() {

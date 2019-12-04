@@ -1,6 +1,7 @@
 package com.hangtran.map.adapter;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,11 @@ public class ShareMapAdapter extends RecyclerView.Adapter<ShareMapAdapter.ViewHo
                 .centerCrop()
                 .into(holder.ivAvatar);
 
+        Log.d("fg4re84regrewg",mapList.get(position).getStart_date() + "");
+
         holder.tvName.setText(  mapList.get(position).getName() + "\n" +
                 mapList.get(position).getRegion() + "\n" +
-                mapList.get(position).getStartDate() + "\n" +
+                mapList.get(position).getStart_date().substring(0,16) + "\n" +
                 "From: " + mapList.get(position).getOwner());
 
         if (mapList.get(position).isChoose()) {
