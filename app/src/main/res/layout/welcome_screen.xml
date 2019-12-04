@@ -21,7 +21,7 @@
             android:layout_marginTop="200dp"
             android:fontFamily="@font/goudy_bookletter_1911"
             android:gravity="center"
-            android:text="Traveling"
+            android:text="SAKURA"
             android:textColor="@color/white"
             android:textSize="35dp"
             />
@@ -41,7 +41,7 @@
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/goudy_bookletter_1911"
                 android:gravity="center"
-                android:text="Steps"
+                android:text="STAMP"
                 android:textColor="@color/white"
                 android:textSize="35dp" />
             <ImageView

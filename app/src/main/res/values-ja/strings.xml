@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Traveling Steps</string>
-
 
 
     <!--change language-->
@@ -48,4 +46,5 @@
     <string name="share_map_completed">あしあと共有がが完成しま</string>
     <string name="share_map_failed">あしあと共有が失敗しました</string>
     <string name="let_try_it_sometime">いつか行ってみてね</string>
+    <string name="app_name">SAKURA STAMP</string>
 </resources>

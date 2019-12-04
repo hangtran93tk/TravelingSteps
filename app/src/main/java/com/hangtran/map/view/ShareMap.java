@@ -177,7 +177,7 @@ public class ShareMap extends AppCompatActivity {
                             intent.putExtra("MapShare", mapShare);
                             startActivity(intent);
                             // 2019/12/01 sugawara add END
-                            //Log.d("Debug", serverResponse.toString());
+                            Log.d("Debug", serverResponse.toString());
                         }else {
                             //Log.d("Debug", "null");
                         }
@@ -186,9 +186,9 @@ public class ShareMap extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                //Log.d("Debug",volleyError.toString());
+                Log.d("Debug",volleyError.toString());
                 Toast.makeText(getApplicationContext(), getString(R.string.share_map_failed), Toast.LENGTH_LONG).show();
-                //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
+                Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
             }
         });
         requestQueue.add(request);
