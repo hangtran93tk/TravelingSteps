@@ -1,6 +1,8 @@
 package com.hangtran.map.model;
 
-public class MyMapShare {
+import java.io.Serializable;
+
+public class MyMapShare implements Serializable {
 
     private String id;
     private String image;

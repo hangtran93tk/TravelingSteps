@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:text="@string/list_of_my_steps"
+                android:text="@string/app_name"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
@@ -49,11 +49,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#03B47F"
-            app:tabIndicatorColor="@android:color/darker_gray"
-            app:tabMode="fixed"
+            app:tabIndicatorColor="#FFF"
+            app:tabIndicatorHeight="8dp"
             app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@android:color/white">
+            app:tabTextColor="#D5D5D5"
+            app:tabIndicatorFullWidth="true">
 
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/list_of_my_steps"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/steps_shared_from_a_friend"/>
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager

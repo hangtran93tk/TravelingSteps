@@ -64,6 +64,7 @@
     <string name="get_map_failed">Get map failed</string>
     <string name="share_map_completed">Share map completed</string>
     <string name="share_map_failed">Share map failed</string>
+    <string name="sakura_stamp">Sakura Stamp</string>
 
 
 </resources>

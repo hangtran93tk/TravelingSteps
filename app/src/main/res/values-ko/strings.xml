@@ -41,4 +41,5 @@
     <string name="share_map_completed">발자국 공유가 완성합니다</string>
     <string name="share_map_failed">발자국 공유가 실패했습니다</string>
     <string name="app_name">SAKURA STAMP</string>
+    <string name="sakura_stamp">Sakura Stamp</string>
 </resources>

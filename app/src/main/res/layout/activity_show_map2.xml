@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/show_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#03B47F">
+
+        <ImageView
+            android:onClick="cancelActivity"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_back_white_28dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:id="@+id/txtNameMaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/map_name"
+            android:fontFamily="@font/goudy_bookletter_1911"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_show_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_maps_test"
+            android:layout_marginBottom="150dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:id="@+id/txtRegionAndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="東京都 2019-10-01 09:05"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+</LinearLayout>

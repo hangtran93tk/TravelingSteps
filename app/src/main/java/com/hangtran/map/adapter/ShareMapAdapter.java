@@ -1,6 +1,7 @@
 package com.hangtran.map.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.model.MyMapShare;
 import com.hangtran.map.utils.ScreenUtils;
+import com.hangtran.map.view.ShowMap2;
 
 import java.util.ArrayList;
 
@@ -78,6 +80,15 @@ public class ShareMapAdapter extends RecyclerView.Adapter<ShareMapAdapter.ViewHo
             tvName   = itemView.findViewById(R.id.tv_name);
             icChoose = itemView.findViewById(R.id.icChoose);
             ivAvatar.setLayoutParams(new FrameLayout.LayoutParams(ScreenUtils.getWidth()/2 - 20,ScreenUtils.getWidth()/2 - 20));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), ShowMap2.class);
+                    intent.putExtra("ShareMap",mapList.get(getAdapterPosition()));
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

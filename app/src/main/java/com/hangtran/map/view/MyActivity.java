@@ -40,7 +40,30 @@ public class MyActivity extends AppCompatActivity {
     private void initTabPage() {
         adapter = new MyAdapter(getSupportFragmentManager(),this);
         mVpDemo.setAdapter(adapter);
-        tabLayout.setupWithViewPager(mVpDemo);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mVpDemo.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        mVpDemo.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.setScrollPosition(position,0,true);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     private void initView() {
