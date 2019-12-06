@@ -133,39 +133,42 @@ public class AddMap extends AppCompatActivity {
         postParams.put("end_date"     , stopDate);
         postParams.put("name"         , edit_map_name.getText().toString());
         postParams.put("location"     , new Gson().toJson(new LocationOfflineDatabase().getLocationList(startDate,stopDate)));
+        if (postParams.get("location").equals("[]")) {
+            Toast.makeText(getApplicationContext(), "この時間帯はあしあとが記録されていません",Toast.LENGTH_LONG).show();
+        }else {
+            /// マップの新規登録後、詳細画面に遷移できない不具合を修正
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
+                    serverResponse -> {
+                        String TAG = "sugawara";
+                        if (serverResponse != null) {
+                            // Log.d("Debug", serverResponse.toString());
+                            Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
+                            try {
+                                // サーバから取得したデータを使ってMaps を生成
+                                int map_id = serverResponse.getInt("id");
+                                String imageUrl = serverResponse.getString("image");
+                                String startDate1 = serverResponse.getString("start_date");
+                                String endDate = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
+                                String region = serverResponse.getString("region");
 
-        /// マップの新規登録後、詳細画面に遷移できない不具合を修正
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
-                serverResponse -> {
-                    String TAG = "sugawara";
-                    if (serverResponse != null) {
-                        // Log.d("Debug", serverResponse.toString());
-                        Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
-                        try {
-                            // サーバから取得したデータを使ってMaps を生成
-                            int map_id = serverResponse.getInt("id");
-                            String imageUrl  = serverResponse.getString("image");
-                            String startDate1 = serverResponse.getString("start_date");
-                            String endDate   = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
-                            String region    = serverResponse.getString("region");
-
-                            Maps item       = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
-                            Intent intent   = new Intent(getApplicationContext(), ShowMap.class);
-                            intent.putExtra("Maps",item);
-                            startActivity(intent);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "onResponse:" + e.getMessage());
-                            e.printStackTrace();
+                                Maps item = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
+                                Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+                                intent.putExtra("Maps", item);
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "onResponse:" + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Log.d(TAG, "onResponse: null received!!");
                         }
-                    }else {
-                        Log.d(TAG, "onResponse: null received!!");
-                    }
-                }, volleyError -> {
-                    Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
-                    //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
-                });
+                    }, volleyError -> {
+                Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
+                //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
+            });
 
-        requestQueue.add(request);
+            requestQueue.add(request);
+        }
     }
 
     private void initView() {
