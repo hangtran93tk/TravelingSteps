@@ -10,13 +10,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -25,10 +26,8 @@ import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.MapShare;
 import com.hangtran.map.model.Maps;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +43,8 @@ public class ShareMap extends AppCompatActivity {
     private EditText  editMapName;
     private EditText  editMapStep;
     private ImageView iv_share_foot_mark;
+
+    private String TAG = "ShareMap";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class ShareMap extends AppCompatActivity {
      * @param view
      */
     public void shareMaps(View view) {
-         //未入力チェックする
+        //未入力チェックする
         if (TextUtils.isEmpty(editMapName.getText())){
             Toast.makeText(getApplicationContext(), getString(R.string.please_enter_your_name), Toast.LENGTH_SHORT).show();
             return;
@@ -153,25 +154,39 @@ public class ShareMap extends AppCompatActivity {
                     if (serverResponse != null) {
                         // 2019/12/01 sugawara add START
                         try {
-                            mapShare.setImage(serverResponse.getString("image"));
-                            Intent intent = new Intent(ShareMap.this, PrintMap.class);
-                            intent.putExtra("MapShare", mapShare);
-                            startActivity(intent);
+                            int result = serverResponse.getInt("result_code");
+                            if (result != 0) {
+                                Toast.makeText(this,serverResponse.getString("error_message"), Toast.LENGTH_LONG).show();
+                            } else {
+                                mapShare.setImage(serverResponse.getString("image"));
+                                Intent intent = new Intent(ShareMap.this, PrintMap.class);
+                                intent.putExtra("MapShare", mapShare);
+                                startActivity(intent);
+                            }
                         }catch(JSONException e) {
-                            String TAG = "sugawara";
-                            Log.e(TAG, "onResponse: Cannot parse JSONObject: " + serverResponse.toString());
+                            Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(" + serverResponse.toString() + ")", Toast.LENGTH_LONG).show();
+                            Log.e(TAG, "onResponse:" + e.getMessage());
+                            e.printStackTrace();
                         }
                         // 2019/12/01 sugawara add END
-                        //Log.d("Debug", serverResponse.toString());
                     }else {
-                        //Log.d("Debug", "null");
+                        Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(no response)", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onResponse: null received!!");
                     }
                     Toast.makeText(getApplicationContext(), getString(R.string.share_map_completed), Toast.LENGTH_LONG).show();
                 }, volleyError -> {
-                    //Log.d("Debug",volleyError.toString());
-                    Toast.makeText(getApplicationContext(), getString(R.string.share_map_failed), Toast.LENGTH_LONG).show();
-                    //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
-                });
+            String message = null;
+            if (volleyError instanceof NetworkError) {
+                message = getString(R.string.err_unreachable_server);
+            } else if (volleyError instanceof ServerError) {
+                message = getString(R.string.err_server_notfound);
+            } else if (volleyError instanceof TimeoutError) {
+                message = getString(R.string.err_timeout);
+            } else {
+                message = getString(R.string.map_registration_failed);
+            }
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        });
         requestQueue.add(request);
     }
     /**

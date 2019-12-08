@@ -9,14 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -26,9 +25,8 @@ import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.Maps;
 import com.hangtran.map.model.Overlap;
-
+import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,31 +99,46 @@ public class ShowMap extends AppCompatActivity {
             postParams.put("id",maps.getId());
 
             JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, urlOverlap, new JSONObject(postParams),
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            if (response != null){
-                                //Log.d(TAG, "onResponse: " + response.toString());
-                                Overlap overlap = new Gson().fromJson(response.toString(),Overlap.class);
+                    (response) -> {
+                        if (response != null){
+                            try {
+                                int result = response.getInt("result_code");
+                                if (result != 0) {
+                                    Toast.makeText(this,response.getString("error_message"), Toast.LENGTH_LONG).show();
+                                } else {
+                                    Overlap overlap = new Gson().fromJson(response.toString(), Overlap.class);
 
-                                // 別の Activity に飛ぶ必要はない。この画面の表示を変えるだけにする。
-                                String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + overlap.getImage();
-                                Glide.with(getApplicationContext())
-                                        .load(pathImage)
-                                        .into(iv_show_map);
-                                buttonChangeOverlap.setText(R.string.delete_my_steps);
-                                overlapped = true;
-                                //Log.d(TAG, "onResponse: pathImage=" + pathImage);
+                                    // 別の Activity に飛ぶ必要はない。この画面の表示を変えるだけにする。
+                                    String pathImage = "http://www.jz.jec.ac.jp/jecseeds/image/" + overlap.getImage();
+                                    Glide.with(getApplicationContext())
+                                            .load(pathImage)
+                                            .into(iv_show_map);
+                                    buttonChangeOverlap.setText(R.string.delete_my_steps);
+                                    overlapped = true;
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(" + response.toString() + ")", Toast.LENGTH_LONG).show();
+                                Log.e(TAG, "onResponse:" + e.getMessage());
+                                e.printStackTrace();
                             }
+                        } else {
+                            Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(no response)", Toast.LENGTH_LONG).show();
+                            Log.d(TAG, "onResponse: null received!!");
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            Log.d("debug",volleyError.toString());
-                            Toast.makeText(getApplicationContext(), getString(R.string.unable_to_display_your_map), Toast.LENGTH_LONG).show();
-                        }
-                    }) {
+                    }, (volleyError) -> {
+                String message = null;
+                if (volleyError instanceof NetworkError) {
+                    message = getString(R.string.err_unreachable_server);
+                } else if (volleyError instanceof ServerError) {
+                    message = getString(R.string.err_server_notfound);
+                } else if (volleyError instanceof TimeoutError) {
+                    message = getString(R.string.err_timeout);
+                } else {
+                    message = getString(R.string.map_registration_failed);
+                }
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                Log.d("Debug", "onErrorResponse: " + volleyError.getMessage());
+            }) {
             };
             requestQueue.add(jsonRequest);
         } else {

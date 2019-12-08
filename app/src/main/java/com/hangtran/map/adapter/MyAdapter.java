@@ -1,12 +1,10 @@
 package com.hangtran.map.adapter;
 
 import android.app.Activity;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
 import com.hangtran.map.fragment.FirstFragment;
 import com.hangtran.map.fragment.SecondFragment;
 

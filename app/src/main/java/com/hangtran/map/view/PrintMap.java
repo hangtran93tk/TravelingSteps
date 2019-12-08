@@ -8,12 +8,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-
 import com.bumptech.glide.Glide;
 import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
@@ -22,8 +20,6 @@ import com.hangtran.map.model.MapShare;
 import com.hangtran.map.utils.FileUtils;
 
 public class PrintMap extends AppCompatActivity {
-
-//    private String      urlShareMap = "http://www.jz.jec.ac.jp/jecseeds/footprint/share.php";
 
     private ImageView   imgMaps,imgQR;
     private TextView    txtNameMaps,txtRegion,txtDate;

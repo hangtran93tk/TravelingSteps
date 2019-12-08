@@ -41,5 +41,12 @@
     <string name="share_map_completed">共享完成</string>
     <string name="share_map_failed">之后，共享失败</string>
     <string name="app_name">SAKURA STAMP</string>
-    <string name="sakura_stamp">Satkura Stamp</string>
+    <string name="sakura_stamp">Sakura Stamp</string>
+
+    <string name="err_loctime_notfound">No location data found on specified time.</string>
+    <string name="err_unreachable_server">Cannot reach the server. Check your internet connection.</string>
+    <string name="err_server_notfound">The server could not be found. Please try again after some time.</string>
+    <string name="err_timeout">Connection timeout. Please check your internet connection or the server status.</string>
+    <string name="err_got_errorresponse">The server responds with an error</string>
+    <string name="err_got_invalidresponse">The server responds invalid strings</string>
 </resources>

@@ -7,16 +7,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.model.Maps;
 import com.hangtran.map.utils.ScreenUtils;
-
 import java.util.ArrayList;
 
 /**
@@ -92,8 +89,8 @@ public class MyMapAdapter extends RecyclerView.Adapter<MyMapAdapter.ViewHolder> 
                 .into(holder.ivAvatar);
 
         holder.tvName.setText(  mapList.get(position).getName() + "\n" +
-                                mapList.get(position).getRegion() + "\n" +
-                                mapList.get(position).getStart_date().substring(0,16));
+                mapList.get(position).getRegion() + "\n" +
+                mapList.get(position).getStart_date().substring(0,16));
 
         if (mapList.get(position).isChoose()) {
             holder.icChoose.setVisibility(View.VISIBLE);

@@ -9,17 +9,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.hangtran.map.BaseApplication;
 import com.hangtran.map.R;
 import com.hangtran.map.model.MyMapShare;
 import com.hangtran.map.utils.ScreenUtils;
 import com.hangtran.map.view.ShowMap2;
-
 import java.util.ArrayList;
 
 public class ShareMapAdapter extends RecyclerView.Adapter<ShareMapAdapter.ViewHolder> {
@@ -62,6 +59,13 @@ public class ShareMapAdapter extends RecyclerView.Adapter<ShareMapAdapter.ViewHo
         }
     }
 
+    /**
+     * 画面上のあしあとをすべて削除する（DBから削除はしない）
+     */
+    public void removeAll() {
+        mapList.clear();
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return mapList.size();
@@ -92,4 +96,3 @@ public class ShareMapAdapter extends RecyclerView.Adapter<ShareMapAdapter.ViewHo
         }
     }
 }
-

@@ -12,13 +12,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -27,10 +28,8 @@ import com.hangtran.map.LocationOfflineDatabase;
 import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.Maps;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -133,9 +132,11 @@ public class AddMap extends AppCompatActivity {
         postParams.put("end_date"     , stopDate);
         postParams.put("name"         , edit_map_name.getText().toString());
         postParams.put("location"     , new Gson().toJson(new LocationOfflineDatabase().getLocationList(startDate,stopDate)));
+
         if (postParams.get("location").equals("[]")) {
-            Toast.makeText(getApplicationContext(), "この時間帯はあしあとが記録されていません",Toast.LENGTH_LONG).show();
-        }else {
+            // セットされた時間帯に位置情報がなければエラー
+            Toast.makeText(this, getString(R.string.err_loctime_notfound) , Toast.LENGTH_LONG).show();
+        } else {
             /// マップの新規登録後、詳細画面に遷移できない不具合を修正
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
                     serverResponse -> {
@@ -145,26 +146,43 @@ public class AddMap extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), getString(R.string.map_registration_is_complete), Toast.LENGTH_LONG).show();
                             try {
                                 // サーバから取得したデータを使ってMaps を生成
-                                int map_id = serverResponse.getInt("id");
-                                String imageUrl = serverResponse.getString("image");
-                                String startDate1 = serverResponse.getString("start_date");
-                                String endDate = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
-                                String region = serverResponse.getString("region");
+                                int result = serverResponse.getInt("result_code");
+                                if (result != 0) {
+                                    Toast.makeText(this,serverResponse.getString("error_message"), Toast.LENGTH_LONG).show();
+                                } else {
+                                    int map_id = serverResponse.getInt("id");
+                                    String imageUrl = serverResponse.getString("image");
+                                    String startDate1 = serverResponse.getString("start_date");
+                                    String endDate = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
+                                    String region = serverResponse.getString("region");
 
-                                Maps item = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
-                                Intent intent = new Intent(getApplicationContext(), ShowMap.class);
-                                intent.putExtra("Maps", item);
-                                startActivity(intent);
+                                    Maps item = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
+                                    Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+                                    intent.putExtra("Maps", item);
+                                    startActivity(intent);
+                                }
                             } catch (JSONException e) {
+                                Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(" + serverResponse.toString() + ")", Toast.LENGTH_LONG).show();
                                 Log.e(TAG, "onResponse:" + e.getMessage());
                                 e.printStackTrace();
                             }
                         } else {
+                            Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(no response)", Toast.LENGTH_LONG).show();
                             Log.d(TAG, "onResponse: null received!!");
                         }
                     }, volleyError -> {
-                Toast.makeText(getApplicationContext(), getString(R.string.map_registration_failed), Toast.LENGTH_LONG).show();
-                //Log.d("Debug", "onErrorResponse: " + volleyError.getMessage() );
+                String message = null;
+                if (volleyError instanceof NetworkError) {
+                    message = getString(R.string.err_unreachable_server);
+                } else if (volleyError instanceof ServerError) {
+                    message = getString(R.string.err_server_notfound);
+                } else if (volleyError instanceof TimeoutError) {
+                    message = getString(R.string.err_timeout);
+                } else {
+                    message = getString(R.string.map_registration_failed);
+                }
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                Log.d("Debug", "onErrorResponse: " + volleyError.getMessage());
             });
 
             requestQueue.add(request);

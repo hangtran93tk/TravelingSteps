@@ -34,8 +34,8 @@
     <string name="name_your_step">Name your step</string>
     <string name="your_name">Your name</string>
     <string name="save_as_a_poscard">Save as a postcard</string>
-    <string name="merge_my_steps">Merge my steps</string>
-    <string name="delete_my_steps">Delete my steps</string>
+    <string name="merge_my_steps">Merge steps</string>
+    <string name="delete_my_steps">Show only my steps</string>
     <string name="choose">Choose</string>
     <string name="cancel">Cancel</string>
     <string name="starting_time">Starting time</string>
@@ -66,5 +66,10 @@
     <string name="share_map_failed">Share map failed</string>
     <string name="sakura_stamp">Sakura Stamp</string>
 
-
+    <string name="err_loctime_notfound">No location data found on specified time.</string>
+    <string name="err_unreachable_server">Cannot reach the server. Check your internet connection.</string>
+    <string name="err_server_notfound">The server could not be found. Please try again after some time.</string>
+    <string name="err_timeout">Connection timeout. Please check your internet connection or the server status.</string>
+    <string name="err_got_errorresponse">The server responds with an error</string>
+    <string name="err_got_invalidresponse">The server responds invalid strings</string>
 </resources>

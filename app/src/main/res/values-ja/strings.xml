@@ -17,12 +17,12 @@
     <string name="your_name">記録者の名前</string>
     <string name="save_as_a_poscard">ポストカードで保存</string>
     <string name="merge_my_steps">あしあとを重ねる</string>
-    <string name="delete_my_steps">あしあとを消す</string>
+    <string name="delete_my_steps">自分のあしあとのみ表示</string>
     <string name="choose">選択</string>
     <string name="cancel">キャンセル</string>
     <string name="starting_time">開始時間</string>
     <string name="finishing_time">終了時間</string>
-    <string name="hours_limited">開始時間から15時間以内を選びください</string>
+    <string name="hours_limited">開始時間から15時間以内を選んでください</string>
     <string name="add">追加</string>
     <string name="add_step">あしあと追加</string>
     <string name="date">年月日</string>
@@ -42,10 +42,18 @@
     <string name="map_name">あしあとの名前</string>
     <string name="get_map_completed">あしあと取得が完成しました</string>
     <string name="get_map_failed">あしあと取得が失敗しました</string>
-    <string name="share_map_completed">あしあと共有がが完成しま</string>
+    <string name="share_map_completed">あしあと共有が完成しました</string>
     <string name="share_map_failed">あしあと共有が失敗しました</string>
     <string name="let_try_it_sometime">いつか行ってみてね</string>
     <string name="app_name">SAKURA STAMP</string>
     <string name="sakura_stamp">Sakura Stamp</string>
     <string name="steps_shared_from_a_friend">贈られたあしあと</string>
+
+
+    <string name="err_loctime_notfound">その時間帯は位置情報が記録されていません</string>
+    <string name="err_unreachable_server">サーバに接続できません。インターネット接続を確認してください。</string>
+    <string name="err_server_notfound">サーバが見つかりません。接続URLを確認してください。</string>
+    <string name="err_timeout">接続がタイムアウトしました。端末のインターネット接続とサーバの稼働状況を確認してください。</string>
+    <string name="err_got_errorresponse">サーバからエラー応答を受信しました</string>
+    <string name="err_got_invalidresponse">サーバの応答内容が不正です</string>
 </resources>

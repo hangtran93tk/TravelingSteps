@@ -4,23 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -34,9 +34,8 @@ import com.hangtran.map.adapter.MyMapAdapter;
 import com.hangtran.map.model.Maps;
 import com.hangtran.map.view.AddMap;
 import com.hangtran.map.view.ShowMap;
-
+import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,11 +46,11 @@ import java.util.Map;
 public class FirstFragment extends Fragment {
 
     private static final String urlDownload = "http://www.jz.jec.ac.jp/jecseeds/footprint/list.php";
-    private  static final String urlUpload = "http://www.jz.jec.ac.jp/jecseeds/footprint/share_receive.php";
+    private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/share_receive.php";
 
     private View            mRootView;
     private RecyclerView    mRcvFirstFragment;
-    private MyMapAdapter mMyMapAdapter;
+    private MyMapAdapter    mMyMapAdapter;
     private ArrayList<Maps> mListPaintedMap = new ArrayList<>();
     private FabMenu         fabMenu;
     private Boolean         isDelete = false;
@@ -95,18 +94,29 @@ public class FirstFragment extends Fragment {
         postParams.put("device_id"        , BaseApplication.getDeviceID());
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject serverResponse) {
-                        Toast.makeText(FirstFragment.this.getContext(),getString(R.string.get_map_completed), Toast.LENGTH_LONG).show();
+                (serverResponse) -> {
+                    try {
+                        int result = serverResponse.getInt("result_code");
+                        if (result != 0) {
+                            Toast.makeText(getContext(), serverResponse.getString("error_message"), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(),getString(R.string.get_map_completed), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getContext(), getString(R.string.err_got_invalidresponse), Toast.LENGTH_LONG).show();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                //Log.d("Debug",volleyError.toString());
-                Toast.makeText(FirstFragment.this.getContext(), getString(R.string.get_map_failed), Toast.LENGTH_LONG).show();
-                //Log.d("XXXXXXXX", "onErrorResponse: " + volleyError.getMessage() );
+                }, (volleyError) -> {
+            String message = null;
+            if (volleyError instanceof NetworkError) {
+                message = getString(R.string.err_unreachable_server);
+            } else if (volleyError instanceof ServerError) {
+                message = getString(R.string.err_server_notfound);
+            } else if (volleyError instanceof TimeoutError) {
+                message = getString(R.string.err_timeout);
+            } else {
+                message = getString(R.string.map_registration_failed);
             }
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         });
         requestQueue.add(request);
     }
@@ -124,7 +134,7 @@ public class FirstFragment extends Fragment {
         mRcvFirstFragment.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mMyMapAdapter = new MyMapAdapter(mListPaintedMap);
         mRcvFirstFragment.setAdapter(mMyMapAdapter);
-        refreshList();
+//        refreshList();
     }
 
     @Override
@@ -159,13 +169,10 @@ public class FirstFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 2000 && resultCode == Activity.RESULT_OK){
-            //Log.d("VVVV","1") ;
             if(data!=null){
                 String result = data.getStringExtra("KEY_SCAN_RESULT");
-                //Log.d("VVVV","Result is: "+ result.substring(0,6)) ;
                 if ( result.substring(0,6).equals("map_id")) {
                     String map_id = result.substring(7, result.indexOf("\n"));
-                    //Log.d("QRString", map_id);
                     addQRCodeInfoIntoServer(map_id );
                 }
                 else  {
@@ -186,27 +193,30 @@ public class FirstFragment extends Fragment {
     }
 
     private void getMapData() {
+        Log.d(TAG, "getMapData: " + "requested");
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload + "?device_id=" + BaseApplication.getDeviceID()
-                                                                                            + "&type=0",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response != null){
-                            mListPaintedMap.addAll(new Gson().fromJson(response, new TypeToken<ArrayList<Maps>>(){}.getType()));
-
-                            //Log.d("debug",mListPaintedMap.size() + "");
-
-                            mMyMapAdapter.notifyDataSetChanged();
-                        }
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlDownload + "?device_id=" + BaseApplication.getDeviceID() + "&type=0",
+                (response) -> {
+                    if (response != null){
+                        mListPaintedMap.addAll(new Gson().fromJson(response, new TypeToken<ArrayList<Maps>>(){}.getType()));
+                        mMyMapAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.err_got_invalidresponse) + "(no response)", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onResponse: null received!!");
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        //Log.d("fsgfdfgdfgdf",volleyError.toString());
-                        Toast.makeText(getActivity(), getString(R.string.unable_to_display_your_map), Toast.LENGTH_LONG).show();
+                (volleyError) -> {
+                    String message = null;
+                    if (volleyError instanceof NetworkError) {
+                        message = getString(R.string.err_unreachable_server);
+                    } else if (volleyError instanceof ServerError) {
+                        message = getString(R.string.err_server_notfound);
+                    } else if (volleyError instanceof TimeoutError) {
+                        message = getString(R.string.err_timeout);
+                    } else {
+                        message = getString(R.string.map_registration_failed);
                     }
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                 }) {
             @Override
             protected Map<String, String> getParams() {

@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.hangtran.map.R;
 import com.hangtran.map.model.MyMapShare;
@@ -17,7 +15,7 @@ public class ShowMap2 extends AppCompatActivity {
     private ImageView iv_show_map;
     private MyMapShare myMapShare;
     private TextView txtNameMaps,txtRegionAndTime;
-                        // 2019/11/30 sugawara ADD (あしあとを重ねた状態かどうか)
+    // 2019/11/30 sugawara ADD (あしあとを重ねた状態かどうか)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

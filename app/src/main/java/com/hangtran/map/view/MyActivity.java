@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabLayout;
 import com.hangtran.map.R;
 import com.hangtran.map.adapter.MyAdapter;
@@ -86,7 +84,7 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void removeMaps(View view){
-       if (isEditable) {
+        if (isEditable) {
             mTvRemove.setText(getString(R.string.cancel));
             isEditable = false;
         } else {
@@ -139,4 +137,3 @@ public class MyActivity extends AppCompatActivity {
     }
 
 }
-
