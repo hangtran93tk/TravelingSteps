@@ -46,7 +46,7 @@ import java.util.Map;
  */
 public class SecondFragment extends Fragment {
 
-    private static final String urlDownload = "http://www.jz.jec.ac.jp/jecseeds/footprint/list.php";
+    private static final String urlDownload  = "http://www.jz.jec.ac.jp/jecseeds/footprint/list.php";
     private  static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/share_receive.php";
 
     private View            mRootView;
@@ -85,8 +85,6 @@ public class SecondFragment extends Fragment {
             }
         });
     }
-
-    /// 2019/11/30 d.sugawara modify START
     // リストを一度表示すると再取得できない不具合を修正
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -103,6 +101,7 @@ public class SecondFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         getShareMapData(); //update
     }
 
@@ -141,8 +140,6 @@ public class SecondFragment extends Fragment {
         });
         requestQueue.add(request);
     }
-
-    /// 2019/11/30 d.sugawara modify END
 
     private String TAG = "sugawara";
     private void getShareMapData() {

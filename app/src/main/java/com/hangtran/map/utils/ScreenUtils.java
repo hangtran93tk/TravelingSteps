@@ -36,7 +36,6 @@ public class ScreenUtils {
         }
         return mHeight;
     }
-
     public static float getDensity(){
         if (mDensity == 0){
             mDensity = BaseApplication.getContext().getResources().getDisplayMetrics().density;

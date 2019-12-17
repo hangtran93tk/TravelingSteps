@@ -134,7 +134,6 @@ public class FirstFragment extends Fragment {
         mRcvFirstFragment.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mMyMapAdapter = new MyMapAdapter(mListPaintedMap);
         mRcvFirstFragment.setAdapter(mMyMapAdapter);
-//        refreshList();
     }
 
     @Override

@@ -28,7 +28,6 @@ public class BaseApplication extends Application {
         if (mDeviceID == null){
             mDeviceID = Settings.Secure.getString(getContext().getContentResolver(),
                     Settings.Secure.ANDROID_ID);
-
             //Log.d("debug",mDeviceID);
         }
         return mDeviceID;

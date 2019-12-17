@@ -4,15 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,8 +27,10 @@ import com.hangtran.map.R;
 import com.hangtran.map.model.IoTDeviceLocationFinder;
 import com.hangtran.map.model.MapShare;
 import com.hangtran.map.model.Maps;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -152,7 +155,6 @@ public class ShareMap extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlUpload, new JSONObject(postParams),
                 serverResponse -> {
                     if (serverResponse != null) {
-                        // 2019/12/01 sugawara add START
                         try {
                             int result = serverResponse.getInt("result_code");
                             if (result != 0) {
@@ -165,13 +167,12 @@ public class ShareMap extends AppCompatActivity {
                             }
                         }catch(JSONException e) {
                             Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(" + serverResponse.toString() + ")", Toast.LENGTH_LONG).show();
-                            Log.e(TAG, "onResponse:" + e.getMessage());
+                            //Log.e(TAG, "onResponse:" + e.getMessage());
                             e.printStackTrace();
                         }
-                        // 2019/12/01 sugawara add END
                     }else {
                         Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(no response)", Toast.LENGTH_LONG).show();
-                        Log.d(TAG, "onResponse: null received!!");
+                        //Log.d(TAG, "onResponse: null received!!");
                     }
                     Toast.makeText(getApplicationContext(), getString(R.string.share_map_completed), Toast.LENGTH_LONG).show();
                 }, volleyError -> {

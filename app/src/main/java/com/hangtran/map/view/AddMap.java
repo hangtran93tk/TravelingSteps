@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class AddMap extends AppCompatActivity {
 
-    private static final String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/register.php";
+    private static final   String urlUpload   = "http://www.jz.jec.ac.jp/jecseeds/footprint/register.php";
     private static final   String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -151,24 +151,24 @@ public class AddMap extends AppCompatActivity {
                                     Toast.makeText(this,serverResponse.getString("error_message"), Toast.LENGTH_LONG).show();
                                 } else {
                                     int map_id = serverResponse.getInt("id");
-                                    String imageUrl = serverResponse.getString("image");
+                                    String imageUrl   = serverResponse.getString("image");
                                     String startDate1 = serverResponse.getString("start_date");
-                                    String endDate = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
-                                    String region = serverResponse.getString("region");
+                                    String endDate    = serverResponse.getString("end_date");  // 今は使っていないが、ShowMap で出すなら必要
+                                    String region     = serverResponse.getString("region");
 
-                                    Maps item = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
+                                    Maps item     = new Maps(Integer.toString(map_id), imageUrl, endDate, startDate1, region);
                                     Intent intent = new Intent(getApplicationContext(), ShowMap.class);
                                     intent.putExtra("Maps", item);
                                     startActivity(intent);
                                 }
                             } catch (JSONException e) {
                                 Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(" + serverResponse.toString() + ")", Toast.LENGTH_LONG).show();
-                                Log.e(TAG, "onResponse:" + e.getMessage());
+                                //Log.e(TAG, "onResponse:" + e.getMessage());
                                 e.printStackTrace();
                             }
                         } else {
                             Toast.makeText(this, getString(R.string.err_got_invalidresponse) + "(no response)", Toast.LENGTH_LONG).show();
-                            Log.d(TAG, "onResponse: null received!!");
+                            //Log.d(TAG, "onResponse: null received!!");
                         }
                     }, volleyError -> {
                 String message = null;

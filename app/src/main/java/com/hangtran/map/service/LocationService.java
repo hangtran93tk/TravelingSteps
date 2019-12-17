@@ -125,13 +125,13 @@ public class LocationService extends Service {
                 .setInterval(LOCATION_REQUEST_MAX_TIME)
                 .setSmallestDisplacement(LOCATION_REQUEST_MIN_DISTANCE);      // デバッグ時はコメントアウト
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
         }
         client.requestLocationUpdates(locationRequest, locationCallback, null);
     }
-
     /**
      * サービス終了時に位置情報取得を停止
      */
